@@ -22,7 +22,7 @@
                    type="text">
             <div @click="toggleEditOrganizationNameMode" class="editIcon">
               <img v-if="!editOrganizationMode" src="../assets/icons/edit.svg" alt="">
-              <img v-else @click="sendChanges()" src="../assets/icons/done.svg" alt="">
+              <img v-else @click="sendChanges" src="../assets/icons/done.svg" alt="">
             </div>
           </div>
           <div class="inputField">
@@ -34,7 +34,6 @@
             </div>
           </div>
           <License title="Litsenziya yuklash (pdf, jpg)" logo="cloud" @license-seted="setLicense" />
-          <button @click='$router.push("/auth")'>Chiqish</button>
         </div>
         <div class="part">
           <div class="login">
@@ -48,15 +47,15 @@
           <div class="" v-if="editPasswordMode">
             <div class="inputField mb-4">
               <label for="lastPassword">Eski parol</label>
-              <input id="lastPassword" v-model="oldPassword" type="text">
+              <input id="lastPassword" v-model="oldPassword" type="password">
             </div>
             <div class="inputField mb-4">
               <label for="newPassword">Yangi parol</label>
-              <input id="newPassword" v-model="password" type="text">
+              <input id="newPassword" v-model="password" type="password">
             </div>
             <div class="inputField mb-4">
               <label for="newPassword2">Yangi parolni takroran kiriting</label>
-              <input id="newPassword2" v-model="rePassword" type="text">
+              <input id="newPassword2" v-model="rePassword" type="password">
             </div>
           </div>
           <button @click="changePassword" v-if="editPasswordMode">
@@ -137,10 +136,20 @@ export default {
       }
       if (this.userLicense) {
         sendObject.licenseId = this.userLicense;
+      } else {
+        delete sendObject['licenseId'];
       }
       delete sendObject['status'];
-      await Http.patch('/api/organ', sendObject);
-      await this.$store.dispatch('me');
+      try {
+        await Http.patch('/api/organ', sendObject);
+        await this.$store.dispatch('me');
+        this.$alert('Saqlandi!', '', 'success');
+        this.userPhoto = '';
+        this.userLicense = '';
+      } catch (e) {
+        console.log(e);
+        this.$alert('Xatolik yuz berdi!', '', 'error');
+      }
     },
     async changePassword() {
       if ((this.password === '') || (this.password !== this.rePassword)) {
@@ -153,8 +162,19 @@ export default {
         oldPassword: this.oldPassword,
       };
       delete sendObject['status'];
-      await Http.patch('/api/organ', sendObject);
-      await this.$store.dispatch('me');
+      delete sendObject['licenseId'];
+      try {
+        await Http.patch('/api/organ', sendObject);
+        await this.$store.dispatch('me');
+        this.password = '';
+        this.rePassword = '';
+        this.oldPassword = '';
+        this.toggleEditPasswordMode();
+        this.$alert('Saqlandi!', '', 'success');
+      } catch (e) {
+        console.log(e);
+        this.$alert('Xatolik yuz berdi!', '', 'error');
+      }
     },
   },
   async mounted() {

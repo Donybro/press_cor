@@ -27,11 +27,28 @@ export default {
   },
   methods: {
     async send() {
-      let path = this.type === 'Tashkilotlar' ? 'organ' : 'journalist';
-      await Http.post(`api/${path}/change`, {
-        id: this.id,
-        status: 'ACTIVE',
+      let result = await this.$fire({
+        text: 'Yana bir oylab koring...',
+        type: 'question',
+        timer: 3000,
+        cancelButtonText: 'Yoq',
+        confirmButtonText: 'Ha',
       });
+      if (result.value) {
+        let path = this.type === 'Tashkilotlar' ? 'organ' : 'journalist';
+        try {
+          await Http.post(`api/${path}/change`, {
+            id: this.id,
+            status: 'ACTIVE',
+          });
+          this.$emit('success');
+          this.$alert('Saqlandi!', '', 'success');
+        } catch (e) {
+          console.log(e);
+          this.$alert('Xatolik yuz berdi!', '', 'error');
+        }
+      }
+
     },
     switchConfirmIcon() {
       this.confirmHovered = !this.confirmHovered;

@@ -7,7 +7,7 @@
       <div class="wrapper">
         <div class="info">
           <div class="photo">
-            <img :src='"http://aokaevents.tcrp.uz/api/file/" + worker.photoId' alt="">
+            <img v-if="worker.photoId" :src='"http://aokaevents.tcrp.uz/api/file/" + worker.photoId' alt="">
           </div>
           <div class="name">{{ worker.lastName + ' ' + worker.firstName + ' ' + worker.fatherName }}</div>
         </div>
@@ -88,11 +88,17 @@ export default {
     async sendWorkerStatus() {
       this.sending = true;
       let status = this.isActive ? 'ACTIVE' : 'INACTIVE';
-      await Http.post('api/journalist/change', {
-        id: this.worker.id,
-        status,
-      });
-      this.sending = false;
+      try {
+        await Http.post('api/journalist/change', {
+          id: this.worker.id,
+          status,
+        });
+        this.sending = false;
+        this.$alert('Saqlandi !');
+      } catch (e) {
+        this.sending = false;
+        return null;
+      }
     },
     async sendWorkerPosition() {
       let sendObject = {
@@ -103,7 +109,12 @@ export default {
       delete sendObject['role'];
       delete sendObject['organizationName'];
       delete sendObject['certificateId'];
-      await Http.patch('api/journalist', sendObject);
+      try {
+        await Http.patch('api/journalist', sendObject);
+        this.$alert('Saqlandi!', '', 'success');
+      } catch (e) {
+        this.$alert('Xatolik yuz berdi!', '', 'error');
+      }
     },
   },
   async created() {
@@ -310,6 +321,8 @@ export default {
     padding-bottom: 6px;
     border: 1px solid #DADADA;
     outline: none;
+    opacity: 1;
+    position: relative;
   }
 
   input::-webkit-input-placeholder {

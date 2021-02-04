@@ -33,7 +33,7 @@
             </a>
           </td>
           <td class="col-4 tableItem">
-            <Action_Buttons :type="showedType" :id="item.id" />
+            <Action_Buttons @success="sethowedType(showedType)" :type="showedType" :id="item.id" />
           </td>
         </tr>
         </tbody>

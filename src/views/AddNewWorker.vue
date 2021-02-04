@@ -1,44 +1,44 @@
 <template>
-  <div class='wrapper'>
-    <div class='title'>Yangi xodim qo’shish</div>
-    <div class='partsWrapper'>
-      <div class='part'>
-        <div class='main'>
-          <div class='label'>Ismi</div>
-          <input v-model='firstName' type='text' class='inputField' />
+  <div class="wrapper container">
+    <div class="title">Yangi xodim qo’shish</div>
+    <div class="partsWrapper">
+      <div class="part">
+        <div class="main">
+          <div class="label">Ismi</div>
+          <input v-model="firstName" type="text" class="inputField" />
         </div>
-        <div class='main'>
-          <div class='label'>Sharifi</div>
-          <input v-model='fatherName' type='text' class='inputField' />
+        <div class="main">
+          <div class="label">Sharifi</div>
+          <input v-model="fatherName" type="text" class="inputField" />
         </div>
-        <div class='main'>
-          <div class='label'>Telefon raqami</div>
-          <input v-model='phoneNumber' type='text' class='inputField' />
+        <div class="main">
+          <div class="label">Telefon raqami</div>
+          <input v-model="phoneNumber" type="text" class="inputField" />
         </div>
-        <div class='main'>
-          <div class='label'>Parol</div>
-          <input v-model='password' type='password' class='inputField' />
+        <div class="main">
+          <div class="label">Parol</div>
+          <input v-model="password" type="password" class="inputField" />
         </div>
       </div>
-      <div class='part'>
-        <div class='main'>
-          <div class='label'>Familiyasi</div>
-          <input v-model='lastName' type='text' class='inputField' />
+      <div class="part">
+        <div class="main">
+          <div class="label">Familiyasi</div>
+          <input v-model="lastName" type="text" class="inputField" />
         </div>
-        <div class='main'>
-          <div class='label'>Lavozimi</div>
-          <input v-model='position' type='text' class='inputField' />
+        <div class="main">
+          <div class="label">Lavozimi</div>
+          <input v-model="position" type="text" class="inputField" />
         </div>
-        <div class='main'>
-          <div class='label'>Login</div>
-          <input v-model='username' type='text' class='inputField' />
+        <div class="main">
+          <div class="label">Login</div>
+          <input v-model="username" type="text" class="inputField" />
         </div>
-        <div class='main'>
-          <div class='label'>Parolni takroran kiriting</div>
-          <input v-model='rePassword' type='password' class='inputField' />
+        <div class="main">
+          <div class="label">Parolni takroran kiriting</div>
+          <input v-model="rePassword" type="password" class="inputField" />
         </div>
-        <button @click='createWorker' class='btn'>
-          <Spinner v-if='sending' size='20px' line-fg-color='rgba(0, 88, 191, 0.5)' />
+        <button @click="createWorker" class="btn">
+          <Spinner v-if="sending" size="20px" line-fg-color="rgba(0, 88, 191, 0.5)" />
           <span v-else>Xodim qo’shish</span>
         </button>
       </div>
@@ -88,13 +88,24 @@ export default {
         position: this.position,
       };
       let req = await Http.post('api/journalist', sendObject);
-      console.log(req);
+      if (req.data.success) {
+        this.username = '';
+        this.password = '';
+        this.rePassword = '';
+        this.firstName = '';
+        this.lastName = '';
+        this.fatherName = '';
+        this.phoneNumber = '';
+        this.position = '';
+        this.$alert(req.data.message);
+        this.sending = false;
+      }
     },
   },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .btn {
   cursor: pointer;
   background: #0058BF;
