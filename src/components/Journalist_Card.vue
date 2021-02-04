@@ -1,26 +1,26 @@
 <template>
-  <div class='main'>
-    <div @click='$router.push(`/profile/${worker.id}`)' class='wrapper'>
-      <div class=''>
-        <div class='photo'>
-          <img :src='worker.photo' alt=''>
+  <div class="main">
+    <div @click="$router.push(`/profile/${worker.id}`)" class="wrapper">
+      <div class="">
+        <div class="photo">
+          <img :src="worker.photo" alt="">
         </div>
       </div>
-      <div class='info'>
-        <div class='name'>
+      <div class="info">
+        <div class="name">
           {{ worker.lastName }}
           {{ worker.firstName }}
           {{ worker.fatherName }}
         </div>
-        <div class='job'>
+        <div class="job">
           {{ worker.position }}
         </div>
       </div>
     </div>
-    <div class='id'>
-      <div @click='handler' class='id_body'>
+    <div class="id">
+      <div @click="getLicense" class="id_body">
         <span>ID karta</span>
-        <img class='icon' src='../assets/icons/download.svg'>
+        <img class="icon" src="../assets/icons/download.svg">
       </div>
     </div>
   </div>
@@ -28,20 +28,24 @@
 
 <script>
 
+import Http from '../common/Http';
+import fileDownload from 'js-file-download';
+
 export default {
   name: 'Journalist_Card',
   props: ['worker'],
   mounted() {
   },
   methods: {
-    handler() {
-      console.log('dsdsd');
+    async getLicense() {
+      let file = await Http.get('http://aokaevents.tcrp.uz/api/journalist/QR/' + this.worker.id);
+      fileDownload(file, 'license.pdf');
     },
   },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .main {
   background: #fff;
   border-radius: 6px;

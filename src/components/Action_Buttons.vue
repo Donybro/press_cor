@@ -1,21 +1,24 @@
 <template>
-  <td class='tableItem'>
-    <div class='btns'>
-      <div class='btn_add confirm' @mouseenter='switchConfirmIcon' @mouseleave='switchConfirmIcon'>
-        <img v-if='!confirmHovered' class='' src='../assets/icons/confirm.svg'>
-        <img v-else src='../assets/icons/confirm_hover.svg'>
+  <td class="tableItem">
+    <div class="btns">
+      <div @click="send" class="btn_add confirm" @mouseenter="switchConfirmIcon" @mouseleave="switchConfirmIcon">
+        <img v-if="!confirmHovered" class="" src="../assets/icons/confirm.svg">
+        <img v-else src="../assets/icons/confirm_hover.svg">
       </div>
-      <div class='btn_add2 cancel' @mouseenter='switchCancelIcon' @mouseleave='switchCancelIcon'>
-        <img v-if='!cancelHovered' src='../assets/icons/cancel.svg'>
-        <img v-else src='../assets/icons/cancel_hovered.svg'>
+      <div class="btn_add2 cancel" @mouseenter="switchCancelIcon" @mouseleave="switchCancelIcon">
+        <img v-if="!cancelHovered" src="../assets/icons/cancel.svg">
+        <img v-else src="../assets/icons/cancel_hovered.svg">
       </div>
     </div>
   </td>
 </template>
 
 <script>
+import Http from '../common/Http';
+
 export default {
   name: 'Action_Buttons',
+  props: ['id', 'type'],
   data() {
     return {
       confirmHovered: false,
@@ -23,7 +26,13 @@ export default {
     };
   },
   methods: {
-
+    async send() {
+      let path = this.type === 'Tashkilotlar' ? 'organ' : 'journalist';
+      await Http.post(`api/${path}/change`, {
+        id: this.id,
+        status: 'ACTIVE',
+      });
+    },
     switchConfirmIcon() {
       this.confirmHovered = !this.confirmHovered;
     },
@@ -34,7 +43,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .tableItem {
   padding: 11px 0;
   text-align: center;

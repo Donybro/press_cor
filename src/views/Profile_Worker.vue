@@ -1,52 +1,53 @@
 <template>
-  <div class=''>
-    <div v-if='isLoading'>
-      <Spinner size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
+  <div class="container">
+    <div v-if="isLoading">
+      <Spinner size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
     </div>
     <div v-else>
-      <div class='wrapper'>
-        <div class='info'>
-          <div class='photo'>
+      <div class="wrapper">
+        <div class="info">
+          <div class="photo">
+            <img :src='"http://aokaevents.tcrp.uz/api/file/" + worker.photoId' alt="">
           </div>
-          <div class='name'>{{ worker.lastName + ' ' + worker.firstName + ' ' + worker.fatherName }}</div>
+          <div class="name">{{ worker.lastName + ' ' + worker.firstName + ' ' + worker.fatherName }}</div>
         </div>
-        <div class='workerState'>
-          <div class='isActive'>
-            <div class='formField'>
-              <label class='container'>Aktiv
-                <input v-model='isActive' type='radio' :value='true' checked='checked' name='radio'>
-                <span class='checkmark'></span>
+        <div class="workerState">
+          <div class="isActive">
+            <div class="formField">
+              <label class="container">Aktiv
+                <input v-model="isActive" type="radio" :value="true" checked="checked" name="radio">
+                <span class="checkmark"></span>
               </label>
             </div>
-            <div class='formField'>
-              <label class='container'>Aktiv emas
-                <input v-model='isActive' type='radio' :value='false' checked='checked' name='radio'>
-                <span class='checkmark'></span>
+            <div class="formField">
+              <label class="container">Aktiv emas
+                <input v-model="isActive" type="radio" :value="false" checked="checked" name="radio">
+                <span class="checkmark"></span>
               </label>
             </div>
           </div>
-          <div class='btn-wrapper'>
-            <div @click='sendWorkerStatus' class='savebtn'>
-              <Spinner v-if='sending' size='20px' line-fg-color='rgba(0, 88, 191, 0.5)' />
+          <div class="btn-wrapper">
+            <div @click="sendWorkerStatus" class="savebtn">
+              <Spinner v-if="sending" size="20px" line-fg-color="rgba(0, 88, 191, 0.5)" />
               <span v-else>Saqlash</span>
             </div>
           </div>
         </div>
-        <div class='inputField'>
-          <label for='companyName'>Lavozimi</label>
-          <input :disabled='!editPositionMode' ref='positionWorker' id='companyName' v-model='position' type='text'>
-          <div @click='toggleEditPositionNameMode' class='editIcon'>
-            <img v-if='!editPositionMode' src='../assets/icons/edit.svg' alt=''>
-            <img @click='sendWorkerPosition' v-else src='../assets/icons/done.svg' alt=''>
+        <div class="inputField">
+          <label for="companyName222">Lavozimi</label>
+          <input :disabled="!editPositionMode" ref="positionWorker" id="companyName222" v-model="position" type="text">
+          <div @click="toggleEditPositionNameMode" class="editIcon">
+            <img v-if="!editPositionMode" src="../assets/icons/edit.svg" alt="">
+            <img @click="sendWorkerPosition" v-else src="../assets/icons/done.svg" alt="">
           </div>
         </div>
-        <div class='phone'>
-          <div class='title'>Telefon raqami</div>
-          <div class=''>{{ worker.phoneNumber }}</div>
+        <div class="phone">
+          <div class="title">Telefon raqami</div>
+          <div class="">{{ worker.phoneNumber }}</div>
         </div>
-        <div class='licence' @click='getPDF'>
+        <div class="licence" @click="getLicense">
           <span>ID kartani yuklab olish (pdf, jpg)</span>
-          <img src='../assets/icons/download.svg' alt=''>
+          <img src="../assets/icons/download.svg" alt="">
         </div>
       </div>
     </div>
@@ -56,6 +57,7 @@
 <script>
 import Http from '../common/Http';
 import Spinner from 'vue-simple-spinner';
+import fileDownload from 'js-file-download';
 
 export default {
   name: 'Profile_Worker',
@@ -79,12 +81,9 @@ export default {
         }, 200);
       }
     },
-    getPDF() {
-      Http.get('api/journalist/QR', {
-        params: {
-          id: this.$route.params.id,
-        },
-      });
+    async getLicense() {
+      let file = await Http.get('http://aokaevents.tcrp.uz/api/journalist/QR/' + this.$route.params.id);
+      fileDownload(file, 'license.pdf');
     },
     async sendWorkerStatus() {
       this.sending = true;
@@ -107,12 +106,15 @@ export default {
       await Http.patch('api/journalist', sendObject);
     },
   },
-  async mounted() {
+  async created() {
     let id = this.$route.params.id;
     this.worker = (await Http.get('api/journalist/' + id)).data.object;
-    if (this.worker.id) { // checking for available worker
-      console.log(this.worker);
+
+    if (this.worker.id) {
+      // checking for available worker
       this.position = this.worker.position;
+      console.log(this.worker.position);
+      console.log(this.position);
       this.isActive = (this.worker.status === 'ACTIVE');
       this.isLoading = false;
     }
@@ -121,7 +123,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 
 .container {
   display: block;
@@ -227,6 +229,12 @@ export default {
     border-radius: 50%;
     position: relative;
     margin-right: 20px;
+
+    img {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+    }
 
     .addPhoto {
       position: absolute;

@@ -1,9 +1,9 @@
 <template>
-  <div class='header'>
-    <span class='title'>Tadbirlar ro’yxati</span>
-    <SearchInput @search-text='emitSearchText' class='search' />
-    <router-link class='addnew' tag='div' to='/addEvent'>
-      <img src='../assets/icons/AddEvent.svg' class='addEventIcon'>
+  <div class="header container">
+    <span class="title">Tadbirlar ro’yxati</span>
+    <SearchInput @search-text="emitSearchText" class="search" />
+    <router-link class="addnew" tag="div" to="/addEvent">
+      <img src="../assets/icons/AddEvent.svg" class="addEventIcon">
       <span>Yangi tadbir</span>
     </router-link>
   </div>
@@ -15,16 +15,16 @@ import SearchInput from './SearchInput';
 export default {
   name: 'Events_Header',
   components: { SearchInput },
-  methods:{
-    emitSearchText(text){
-      this.$emit('search-text',text)
-    }
-  }
+  methods: {
+    emitSearchText(text) {
+      this.$emit('search-text', text);
+    },
+  },
 };
 </script>
 
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .header {
   margin-top: 10px;
   display: flex;

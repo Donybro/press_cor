@@ -1,39 +1,39 @@
 <template>
-  <div class='wrapper'>
-    <div class='title'>{{ event.name }}</div>
-    <div class='partsWrapper'>
-      <div class='part'>
-        <div class='main'>
-          <div class='label'>O’tkazilish kuni</div>
-          <div class='body'>{{ new Date(event.dateTime) | date }}</div>
+  <div class="wrapper container">
+    <div class="title">{{ event.name }}</div>
+    <div class="partsWrapper">
+      <div class="part">
+        <div class="main">
+          <div class="label">O’tkazilish kuni</div>
+          <div class="body">{{ new Date(event.dateTime) | date }}</div>
         </div>
-        <div class='main'>
-          <div class='label'>Ro’yxatdan o’tish uchun oxirgi muhlat</div>
-          <div class='body'>{{ new Date(event.deadline) | date('datetime') }}</div>
+        <div class="main">
+          <div class="label">Ro’yxatdan o’tish uchun oxirgi muhlat</div>
+          <div class="body">{{ new Date(event.deadline) | date('datetime') }}</div>
         </div>
-        <div class='main'>
-          <div class='label'>Tadbir o’tkazilish manzili</div>
-          <div class='body'>{{ event.address }}</div>
+        <div class="main">
+          <div class="label">Tadbir o’tkazilish manzili</div>
+          <div class="body">{{ event.address }}</div>
         </div>
       </div>
-      <div class='part'>
-        <div class='main'>
-          <div class='label'>O’tkazilish vaqti</div>
-          <div class='body'>{{ new Date(event.dateTime) |date('time') }}</div>
+      <div class="part">
+        <div class="main">
+          <div class="label">O’tkazilish vaqti</div>
+          <div class="body">{{ new Date(event.dateTime) |date('time') }}</div>
         </div>
-        <div class='main'>
-          <div class='label'>Ja’mi o’rinlar soni</div>
-          <div class='body'>{{ event.maxAmount || 'Cheklanmagan' }}</div>
+        <div class="main">
+          <div class="label">Ja’mi o’rinlar soni</div>
+          <div class="body">{{ event.maxAmount || 'Cheklanmagan' }}</div>
         </div>
-        <div class='main'>
-          <div class='label'>Ro’yxatdan o’tganlar soni</div>
-          <div class='body'>{{ event.joinedCount }}</div>
+        <div class="main">
+          <div class="label">Ro’yxatdan o’tganlar soni</div>
+          <div class="body">{{ event.joinedCount }}</div>
         </div>
-        <button @click='joinEvent' v-if='type==="allAvailable"' :disabled='event.joinedCount===event.maxAmount'
-                class='btn'>
+        <button @click="joinEvent" v-if='type==="allAvailable"' :disabled="event.joinedCount===event.maxAmount"
+                class="btn">
           Qatnashish
         </button>
-        <button @click='cancelEvent' v-else class='btn cancel'>
+        <button @click="cancelEvent" v-else class="btn cancel">
           Bekor qilish
         </button>
       </div>
@@ -73,7 +73,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .btn {
   background: #0058BF;
   border-radius: 20px;

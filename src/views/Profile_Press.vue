@@ -1,65 +1,65 @@
 <template>
-  <div class='container'>
-    <div v-if='isLoading' class=''>
-      <Spinner size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
+  <div class="container">
+    <div v-if="isLoading" class="">
+      <Spinner size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
     </div>
     <div v-else>
-      <div class='wrapper'>
-        <div class='info'>
-          <div class='photo'>
-            <img :src='"http://aokaevents.tcrp.uz/api/file/" + getOrganizationState.logoId' alt=''>
-            <AddPhoto @photo-seted='setPhoto' />
+      <div class="wrapper">
+        <div class="info">
+          <div class="photo">
+            <img :src='"http://aokaevents.tcrp.uz/api/file/" + getOrganizationState.logoId' alt="">
+            <AddPhoto @photo-seted="setPhoto" />
           </div>
-          <div class='name'>{{ getOrganizationState.name }}</div>
+          <div class="name">{{ getOrganizationState.name }}</div>
         </div>
-        <div class='part'>
-          <div class='inputField'>
-            <label for='companyName'>Tashkilot nomi</label>
-            <input :disabled='!editOrganizationMode'
-                   ref='companyName'
-                   id='companyName'
-                   v-model='companyName'
-                   type='text'>
-            <div @click='toggleEditOrganizationNameMode' class='editIcon'>
-              <img v-if='!editOrganizationMode' src='../assets/icons/edit.svg' alt=''>
-              <img v-else @click='sendChanges()' src='../assets/icons/done.svg' alt=''>
+        <div class="part">
+          <div class="inputField">
+            <label for="companyName">Tashkilot nomi</label>
+            <input :disabled="!editOrganizationMode"
+                   ref="companyName"
+                   id="companyName"
+                   v-model="companyName"
+                   type="text">
+            <div @click="toggleEditOrganizationNameMode" class="editIcon">
+              <img v-if="!editOrganizationMode" src="../assets/icons/edit.svg" alt="">
+              <img v-else @click="sendChanges()" src="../assets/icons/done.svg" alt="">
             </div>
           </div>
-          <div class='inputField'>
-            <label for='phone'>Telefon raqami</label>
-            <input :disabled='!editPhoneMode' ref='phone' id='phone' v-model='phoneNumber' type='text'>
-            <div @click='toggleEditPhoneMode' class='editIcon'>
-              <img v-if='!editPhoneMode' src='../assets/icons/edit.svg' alt=''>
-              <img @click='sendChanges' v-else src='../assets/icons/done.svg' alt=''>
+          <div class="inputField">
+            <label for="phone">Telefon raqami</label>
+            <input :disabled="!editPhoneMode" ref="phone" id="phone" v-model="phoneNumber" type="text">
+            <div @click="toggleEditPhoneMode" class="editIcon">
+              <img v-if="!editPhoneMode" src="../assets/icons/edit.svg" alt="">
+              <img @click="sendChanges" v-else src="../assets/icons/done.svg" alt="">
             </div>
           </div>
-          <License title='Litsenziya yuklash (pdf, jpg)' logo='cloud' @license-seted='setLicense' />
+          <License title="Litsenziya yuklash (pdf, jpg)" logo="cloud" @license-seted="setLicense" />
           <button @click='$router.push("/auth")'>Chiqish</button>
         </div>
-        <div class='part'>
-          <div class='login'>
-            <span class='title'>Login</span>
+        <div class="part">
+          <div class="login">
+            <span class="title">Login</span>
             <span>{{ getOrganizationState.username }}</span>
           </div>
-          <div @click='toggleEditPasswordMode' class='licence mb-4'>
+          <div @click="toggleEditPasswordMode" class="licence mb-4">
             <span>Parolni o’zgartirish</span>
-            <img src='../assets/icons/editPasword.svg' alt=''>
+            <img src="../assets/icons/editPasword.svg" alt="">
           </div>
-          <div class='' v-if='editPasswordMode'>
-            <div class='inputField mb-4'>
-              <label for='lastPassword'>Eski parol</label>
-              <input id='lastPassword' v-model='oldPassword' type='text'>
+          <div class="" v-if="editPasswordMode">
+            <div class="inputField mb-4">
+              <label for="lastPassword">Eski parol</label>
+              <input id="lastPassword" v-model="oldPassword" type="text">
             </div>
-            <div class='inputField mb-4'>
-              <label for='newPassword'>Yangi parol</label>
-              <input id='newPassword' v-model='password' type='text'>
+            <div class="inputField mb-4">
+              <label for="newPassword">Yangi parol</label>
+              <input id="newPassword" v-model="password" type="text">
             </div>
-            <div class='inputField mb-4'>
-              <label for='newPassword2'>Yangi parolni takroran kiriting</label>
-              <input id='newPassword2' v-model='rePassword' type='text'>
+            <div class="inputField mb-4">
+              <label for="newPassword2">Yangi parolni takroran kiriting</label>
+              <input id="newPassword2" v-model="rePassword" type="text">
             </div>
           </div>
-          <button @click='changePassword' v-if='editPasswordMode'>
+          <button @click="changePassword" v-if="editPasswordMode">
             Tasdiqlash
           </button>
         </div>
@@ -165,7 +165,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -193,6 +193,12 @@ export default {
     border-radius: 50%;
     position: relative;
     margin-right: 20px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
   }
 }
 

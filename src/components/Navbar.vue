@@ -1,13 +1,14 @@
 <template>
-  <div class='navbar_wrapper'>
-    <Spinner v-if='!userInfoLoaded' size='50px' line-fg-color='rgba(0, 88, 191, 0.5)' />
-    <div v-else class='wrapperProfile'>
-      <Bell v-if='getRole==="ROLE_ADMIN"' :newMessage='newMessage' class='bell' />
-      <span @click='$router.push("/profile")' class='profile'>
-        <span class='photo'>
-           <img :src='"http://aokaevents.tcrp.uz/api/file/"+pathToPhoto' alt=''>
+  <div class="navbar_wrapper">
+    <Spinner v-if="!userInfoLoaded" size="50px" line-fg-color="rgba(0, 88, 191, 0.5)" />
+    <div v-else class="wrapperProfile">
+      <Bell v-if='getRole==="ROLE_ADMIN"' :newMessage="newMessage" class="bell" />
+      <span @click='$router.push("/profile")' class="profile">
+        <span class="photo">
+            <img v-if='getRole === "ROLE_ADMIN" || getRole === "ROLE_CREATOR"' :src="logodefault" alt="">
+            <img v-else :src='"http://aokaevents.tcrp.uz/api/file/"+pathToPhoto' alt="">
         </span>
-          <span class='profile_title'>{{ showName }}</span>
+          <span class="profile_title">{{ showName }}</span>
       </span>
     </div>
   </div>
@@ -16,6 +17,7 @@
 <script>
 import Bell from './Bell';
 import Spinner from 'vue-simple-spinner';
+import logodefault from '../assets/icons/images.png';
 
 export default {
   name: 'Navbar',
@@ -24,6 +26,7 @@ export default {
     return {
       newMessage: true,
       pathToPhoto: '',
+      logodefault,
     };
   },
   computed: {
@@ -49,17 +52,21 @@ export default {
       } else return false;
     },
   },
-  created() {
-    if (this.getRole === 'ROLE_JOURNALIST') {
-      this.pathToPhoto = this.$store.getters['getWorkerState'].photoId;
-    } else if (this.getRole === 'ROLE_ORGANIZATION') {
-      this.pathToPhoto = this.$store.getters['getOrganizationState'].logoId;
-    }
+  watch: {
+    userInfoLoaded(state) {
+      if (state) {
+        if (this.getRole === 'ROLE_JOURNALIST') {
+          this.pathToPhoto = this.$store.getters['getWorkerState'].photoId;
+        } else if (this.getRole === 'ROLE_ORGANIZATION') {
+          this.pathToPhoto = this.$store.getters['getOrganizationState'].logoId;
+        }
+      }
+    },
   },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 
 .navbar_wrapper {
   background-color: #fff;
@@ -86,7 +93,7 @@ export default {
     width: 44px;
     background: #231;
     border-radius: 50%;
-    border: 1px solid #0058BF;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
     img {
       width: 100%;

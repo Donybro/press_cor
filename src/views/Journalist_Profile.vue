@@ -1,53 +1,55 @@
 <template>
-  <div class='wrapper'>
-    <div class='info'>
-      <div class='photo'>
-        <img :src='"http://aokaevents.tcrp.uz/api/file/"+getWorkerState.photoId' alt=''>
-        <AddPhoto @photo-seted='setWorkerPhoto' />
+  <div class="wrapper container">
+    <div class="info">
+      <div class="photo">
+        <img class="imgPhoto" :src='"http://aokaevents.tcrp.uz/api/file/"+getWorkerState.photoId' alt="">
+        <AddPhoto @photo-seted="setWorkerPhoto" />
       </div>
-      <div class='name'>{{ getWorkerState.firstName }} {{ getWorkerState.lastName }} {{ getWorkerState.fatherName }}
+      <div class="name">{{ getWorkerState.firstName }} {{ getWorkerState.lastName }} {{ getWorkerState.fatherName }}
       </div>
     </div>
-    <div class='main'>
-      <div class='part'>
-        <div class='profession'>
-          <div class='title'>Lavozimi</div>
+    <div class="main">
+      <div class="part">
+        <div class="profession">
+          <div class="title">Lavozimi</div>
           {{ getWorkerState.position }}
         </div>
-        <div class='inputField'>
-          <label for='phone'>Telefon raqami</label>
-          <input :disabled='!editPhoneMode' :placeholder='getWorkerState.phoneNumber' ref='phone' id='phone'
-                 v-model='phoneNumber' type='text'>
-          <div @click='toggleEditPhoneMode' class='editIcon'>
-            <img v-if='!editPhoneMode' src='../assets/icons/edit.svg' alt=''>
-            <img @click='sendChanges' v-else src='../assets/icons/done.svg' alt=''>
+        <div class="inputField">
+          <label for="phone">Telefon raqami</label>
+          <input :disabled="!editPhoneMode" :placeholder="getWorkerState.phoneNumber" ref="phone" id="phone"
+                 v-model="phoneNumber" type="text">
+          <div @click="toggleEditPhoneMode" class="editIcon">
+            <img v-if="!editPhoneMode" src="../assets/icons/edit.svg" alt="">
+            <img @click="sendChanges" v-else src="../assets/icons/done.svg" alt="">
           </div>
         </div>
-        <div class='licence' @click='getPDF'>
-          <span>ID kartani yuklab olish (pdf, jpg)</span>
-          <img src='../assets/icons/download.svg' alt=''>
+        <div>
+          <a @click="getLicense" class="licence" download>
+            ID kartani yuklab olish (pdf, jpg)
+            <img src="../assets/icons/download.svg" alt="">
+          </a>
         </div>
       </div>
-      <div class='part'>
-        <div @click='toggleEditPasswordMode' class='licence'>
+      <div class="part">
+        <div @click="toggleEditPasswordMode" class="licence">
           <span>Parolni o’zgartirish</span>
-          <img src='../assets/icons/editPasword.svg' alt=''>
+          <img src="../assets/icons/editPasword.svg" alt="">
         </div>
-        <div class='mb-4' v-if='editPasswordMode'>
-          <div class='inputField mb-4'>
-            <label for='lastPassword'>Eski parol</label>
-            <input id='lastPassword' v-model='oldPassword' type='text'>
+        <div class="mb-4" v-if="editPasswordMode">
+          <div class="inputField mb-4">
+            <label for="lastPassword">Eski parol</label>
+            <input id="lastPassword" v-model="oldPassword" type="text">
           </div>
-          <div class='inputField mb-4'>
-            <label for='newPassword'>Yangi parol</label>
-            <input id='newPassword' v-model='password' type='text'>
+          <div class="inputField mb-4">
+            <label for="newPassword">Yangi parol</label>
+            <input id="newPassword" v-model="password" type="text">
           </div>
-          <div class='inputField mb-4'>
-            <label for='newPassword2'>Yangi parolni takroran kiriting</label>
-            <input id='newPassword2' v-model='rePassword' type='text'>
+          <div class="inputField mb-4">
+            <label for="newPassword2">Yangi parolni takroran kiriting</label>
+            <input id="newPassword2" v-model="rePassword" type="text">
           </div>
         </div>
-        <button @click='changePassword' v-if='editPasswordMode'>
+        <button @click="sendChanges" v-if="editPasswordMode">
           Tasdiqlash
         </button>
       </div>
@@ -59,6 +61,9 @@
 import AddPhoto from '../components/AddPhoto';
 import { mapGetters } from 'vuex';
 import Http from '../common/Http';
+
+// let  fileDownload = require('js-file-download');
+import fileDownload from 'js-file-download';
 
 export default {
   name: 'Journalist_Profile',
@@ -75,10 +80,9 @@ export default {
     };
   },
   methods: {
-    async getPDF() {
-      await Http.get('api/journalist/QR', {
-        params: this.getWorkerState.id,
-      });
+    async getLicense() {
+      let file = await Http.get('http://aokaevents.tcrp.uz/api/journalist/QR/' + this.getWorkerState.id);
+      fileDownload(file, 'license.pdf');
     },
     toggleEditPasswordMode() {
       this.editPasswordMode = !this.editPasswordMode;
@@ -93,7 +97,7 @@ export default {
     },
     async setWorkerPhoto(photo) {
       this.photoId = (await Http.post('api/file', photo)).data.object.fileId;
-      await this.saveChanges();
+      await this.sendChanges();
     },
     async sendChanges() {
       let workerState = this.getWorkerState;
@@ -107,6 +111,7 @@ export default {
         phoneNumber: this.phoneNumber,
         password: this.password,
         rePassword: this.rePassword,
+        oldPassword: this.oldPassword,
       };
       if (organizationName) {
         sendObj.position = workerState.position;
@@ -116,7 +121,13 @@ export default {
       if (this.photoId) {
         sendObj.photoId = this.photoId;
       }
-      await Http.patch('api/journalist', sendObj);
+      let res = await Http.patch('api/journalist', sendObj);
+      if (res.data.success) {
+        this.password = '';
+        this.rePassword = '';
+        this.oldPassword = '';
+        this.toggleEditPasswordMode();
+      }
       await this.$store.dispatch('me');
     },
   },
@@ -139,7 +150,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .wrapper {
   padding-top: 10px;
 }
@@ -171,9 +182,9 @@ export default {
     position: relative;
     margin-right: 20px;
 
-    img {
-      width: 100%;
-      height: 100%;
+    .imgPhoto {
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
     }
 
@@ -233,6 +244,7 @@ export default {
   display: flex;
   position: relative;
   width: 90%;
+  text-decoration: none;
 
   img {
     margin-left: 10px;

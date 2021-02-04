@@ -1,19 +1,19 @@
 <template>
-  <div class='wrapper'>
-    <div class='title'>{{ event.name }}</div>
-    <div class='partsWrapper'>
-      <div class='part'>
-        <div class='main'>
-          <div class='label'>O’tkazilingan sana</div>
-          <div class='body'>{{ ((new Date(event.dateTime))).toLocaleString() }}</div>
+  <div class="wrapper container">
+    <div class="title">{{ event.name }}</div>
+    <div class="partsWrapper">
+      <div class="part">
+        <div class="main">
+          <div class="label">O’tkazilingan sana</div>
+          <div class="body">{{ ((new Date(event.dateTime))).toLocaleString() }}</div>
         </div>
-        <div class='main'>
-          <div class='label'>O’tkazilingan vaqt</div>
-          <div class='body'>{{ ((new Date(event.deadline))).toLocaleString() }}</div>
+        <div class="main">
+          <div class="label">O’tkazilingan vaqt</div>
+          <div class="body">{{ ((new Date(event.deadline))).toLocaleString() }}</div>
         </div>
-        <div class='main'>
-          <div class='label'>Tadbir o’tkazilish manzili</div>
-          <div class='body last'>{{ event.address }}</div>
+        <div class="main">
+          <div class="label">Tadbir o’tkazilish manzili</div>
+          <div class="body last">{{ event.address }}</div>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 
 .title {
   margin-top: 20px;

@@ -1,30 +1,31 @@
 <template>
-  <div class='container'>
-    <div class='row'>
-      <SearchInput class='search col-6' />
+  <div class="container">
+    <div class="row">
+      <SearchInput class="search col-6" />
     </div>
-    <div class='tableWrapper row'>
-      <table class='table container'>
+    <div class="tableWrapper row">
+      <table class="table container">
         <thead>
-        <tr class='tableHeader row'>
-          <th class='col-6'>Xodimlar ro’yxati</th>
-          <th class='col-4'>Lavozimi</th>
-          <th class='col-2'>Faolligi</th>
+        <tr class="tableHeader row">
+          <th class="col-6">Xodimlar ro’yxati</th>
+          <th class="col-4">Lavozimi</th>
+          <th class="col-2">Faolligi</th>
         </tr>
         </thead>
         <tbody>
-        <tr class='tableList row' v-for='(worker) in workers' :key='worker.id'>
-          <td class='tableItem col-6'>{{ worker.firstName + ' ' + worker.lastName + ' ' + worker.fatherName }}</td>
-          <td class='tableItem col-4'>{{ worker.position }}</td>
-          <td class='tableItem col-2'>
-            <img v-if='worker.status === "ACTIVE"' src='../assets/icons/doneGreen.svg'>
-            <img v-else src='../assets/icons/notDone.svg'>
+        <tr class="tableList row" v-for="(worker) in workers" :key="worker.id">
+          <td class="tableItem col-6">{{ worker.firstName + ' ' + worker.lastName + ' ' + worker.fatherName }}</td>
+          <td class="tableItem col-4">{{ worker.position }}</td>
+          <td class="tableItem col-2">
+            <img v-if='worker.status === "ACTIVE"' src="../assets/icons/doneGreen.svg">
+            <img v-else src="../assets/icons/notDone.svg">
           </td>
         </tr>
         </tbody>
       </table>
     </div>
-    <paginator :items='workers' :range='6' @current-page='setCurrentPage' @items-for-render='renderItems' />
+    <paginator :pagination-list-length="paginationListLength" :current-page="currentPage" :range="3"
+               @current-page="setCurrentPage" />
   </div>
 </template>
 
@@ -39,11 +40,11 @@ export default {
   components: { Paginator, SearchInput },
   data() {
     return {
-      renderedItems: [],
       currentPage: 1,
       workers: [],
       searchText: '',
       loading: true,
+      paginationListLength: 1,
     };
   },
   methods: {
@@ -69,7 +70,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 
 .table_wrapper {
   height: 500px;

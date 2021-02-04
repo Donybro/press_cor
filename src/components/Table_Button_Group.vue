@@ -1,9 +1,9 @@
 <template>
-  <div class='buttongroup' :class='{"listType":type==="list"}'>
-    <div class='button' @click='toggleBtn(leftText)' :class='{"active":getTableSelectedButton===leftText}'>
+  <div class="buttongroup" :class='{"listType":type==="list"}'>
+    <div class="button" @click="toggleBtn(leftText)" :class='{"active":getTableSelectedButton===leftText}'>
       {{ leftText }}
     </div>
-    <div class='button' @click='toggleBtn(rightText)' :class='{"active":getTableSelectedButton===rightText}'>
+    <div class="button" @click="toggleBtn(rightText)" :class='{"active":getTableSelectedButton===rightText}'>
       {{ rightText }}
     </div>
   </div>
@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 
 .buttongroup {
   cursor: pointer;
@@ -56,7 +56,7 @@ export default {
 
   .button {
     width: 50%;
-    padding: 8px 0;
+    padding: 12px 0;
     text-align: center;
 
     &:first-child {

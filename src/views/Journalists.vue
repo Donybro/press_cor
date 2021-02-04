@@ -1,29 +1,29 @@
 <template>
-  <div class='wrapper container'>
-    <Journalists_Header @search-text='emitSearchText' />
-    <div class='row'>
-      <Table_Button_Group class='col-3'
-                          @showed-type='setShowedType'
-                          left-text='Aktiv' right-text='Neaktiv'
-                          type='list' />
+  <div class="wrapper container">
+    <Journalists_Header @search-text="emitSearchText" />
+    <div class="row">
+      <Table_Button_Group class="col-3"
+                          @showed-type="setShowedType"
+                          left-text="Aktiv" right-text="Neaktiv"
+                          type="list" />
     </div>
-    <div v-if='loading' class='spinnerWrapper'>
-      <Spinner size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
+    <div v-if="loading" class="spinnerWrapper">
+      <Spinner size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
     </div>
-    <div class='row ' v-else-if='showMessageEmpty && !loading'>
-      <div class='col textInfo'>
+    <div class="row " v-else-if="showMessageEmpty && !loading">
+      <div class="col textInfo">
         Xodimlar topilmadi !
       </div>
     </div>
     <div v-else>
-      <div class='workersWrapper container'>
-        <div class='workers_list row'>
-          <div :class='colType' class='worker' v-for='worker in workers' :key='worker.id'>
-            <Journalist_Card :worker='worker' />
+      <div class="workersWrapper container">
+        <div class="workers_list row">
+          <div :class="colType" class="worker" v-for="worker in workers" :key="worker.id">
+            <Journalist_Card :worker="worker" />
           </div>
         </div>
       </div>
-      <paginator :range='9' :paginationListLength='paginationListLength' @current-page='setCurrentPage' />
+      <paginator :range="9" :paginationListLength="paginationListLength" @current-page="setCurrentPage" />
     </div>
   </div>
 </template>
@@ -112,7 +112,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .workersWrapper {
   height: 400px;
 }

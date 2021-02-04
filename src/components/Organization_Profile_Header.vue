@@ -1,29 +1,29 @@
 <template>
-  <div class='wrapper'>
-    <div class='info'>
-      <div class='photo'></div>
-      <div class='name'>{{ info.name }}</div>
+  <div class="wrapper container">
+    <div class="info">
+      <div class="photo"></div>
+      <div class="name">{{ info.name }}</div>
     </div>
-    <div class='workerState'>
-      <div class='isActive'>
-        <div class='formField'>
-          <label class='container'>Aktiv
-            <input v-model='isActive' type='radio' :value='true' checked='checked' name='radio'>
-            <span class='checkmark'></span>
+    <div class="workerState">
+      <div class="isActive">
+        <div class="formField">
+          <label class="container">Aktiv
+            <input v-model="isActive" type="radio" :value="true" checked="checked" name="radio">
+            <span class="checkmark"></span>
           </label>
         </div>
-        <div class='formField'>
-          <label class='container'>Aktiv emas
-            <input v-model='isActive' type='radio' :value='false' checked='checked' name='radio'>
-            <span class='checkmark'></span>
+        <div class="formField">
+          <label class="container">Aktiv emas
+            <input v-model="isActive" type="radio" :value="false" checked="checked" name="radio">
+            <span class="checkmark"></span>
           </label>
         </div>
       </div>
-      <div @click='saveChanges' class='btn'>Saqlash</div>
+      <div @click="saveChanges" class="btn">Saqlash</div>
     </div>
 
-    <div class='phone'>
-      <div class='title mb-2'>Telefon raqam</div>
+    <div class="phone">
+      <div class="title mb-2">Telefon raqam</div>
       {{ info.phoneNumber }}
     </div>
   </div>
@@ -40,8 +40,12 @@ export default {
       isActive: true,
     };
   },
-  created() {
-    this.isActive = this.info.status === 'ACTIVE';
+  watch: {
+    info(info) {
+      if (info.id) {
+        this.isActive = this.info.status === 'ACTIVE';
+      }
+    },
   },
   methods: {
     saveChanges() {
@@ -58,7 +62,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 
 .container {
   display: block;

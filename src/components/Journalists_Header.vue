@@ -1,9 +1,9 @@
 <template>
-  <div class='header'>
-    <span class='title'>Jurnalistlar ro’yxati</span>
-    <SearchInput class='search' @search-text='emitSearchText' />
-    <router-link class='addnew' tag='div' to='journalists/addWorker'>
-      <img src='../assets/icons/add-user.svg' class='user_icon'>
+  <div class="header container">
+    <span class="title">Jurnalistlar ro’yxati</span>
+    <SearchInput class="search" @search-text="emitSearchText" />
+    <router-link class="addnew" tag="div" to="journalists/addWorker">
+      <img src="../assets/icons/add-user.svg" class="user_icon">
       <span>Yangi xodim</span>
     </router-link>
   </div>
@@ -24,7 +24,7 @@ export default {
 </script>
 
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .header {
   margin-top: 40px;
   display: flex;

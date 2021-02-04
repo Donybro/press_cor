@@ -1,46 +1,46 @@
 <template>
-  <div class='wrapper container'>
-    <div class='row'>
-      <Table_Button_Group class='col-3 btns'
-                          @showed-type='setShowedType'
-                          :left-text='leftButtonText'
-                          :right-text='rightButtonText'
+  <div class="wrapper container">
+    <div class="row btnsGroup">
+      <Table_Button_Group class="col-3 btns"
+                          @showed-type="setShowedType"
+                          :left-text="leftButtonText"
+                          :right-text="rightButtonText"
       />
     </div>
-    <div class='row tableWrapper'>
-      <table class='table container'>
+    <div class="row tableWrapper">
+      <table class="table container">
         <thead>
-        <tr class='row tableHeader'>
-          <th class='col-6'>Tadbir nomi</th>
-          <th class='col-3'>Sana</th>
-          <th class='col-3'>Qo’shilish</th>
+        <tr class="row tableHeader">
+          <th class="col-6">Tadbir nomi</th>
+          <th class="col-3">Sana</th>
+          <th class="col-3">Qo’shilish</th>
         </tr>
         </thead>
-        <tr v-if='loading' class='spinnerWrapper col'>
-          <Spinner class='spinnerWrapper' size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
+        <tr v-if="loading" class="spinnerWrapper col">
+          <Spinner class="spinnerWrapper" size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
         </tr>
-        <tbody v-if='!loading  && events.length'>
-        <tr class='row tableList' v-for='(event) in events' :key='event.name'>
-          <td class='tableItem col-6'>{{ event.name }}</td>
-          <td class='tableItem col-3'>{{
+        <tbody v-if="!loading  && events.length">
+        <tr class="row tableList" v-for="(event) in events" :key="event.name">
+          <td class="tableItem col-6">{{ event.name }}</td>
+          <td class="tableItem col-3">{{
               new Date(event.dateTime) | date
             }}
           </td>
-          <td class='tableItem  buttonWrapper col-3'>
+          <td class="tableItem  buttonWrapper col-3">
             <button
-                @click='$router.push(`/event/${queryString}/${event.id}`)'
-                class='btn'
+                @click="$router.push(`/event/${queryString}/${event.id}`)"
+                class="btn"
             >
               Batafsil
             </button>
           </td>
         </tr>
         </tbody>
-        <tr v-if='!events.length && queryString==="allAvailable"' class='textInfo'>Yangi tadbirlar hozircha yoq</tr>
-        <tr v-if='!events.length && queryString==="allJoined"' class='textInfo'>A`zo bo`lgan tadbirlar hozircha yoq</tr>
+        <tr v-if='!events.length && queryString==="allAvailable"' class="textInfo">Yangi tadbirlar hozircha yoq</tr>
+        <tr v-if='!events.length && queryString==="allJoined"' class="textInfo">A`zo bo`lgan tadbirlar hozircha yoq</tr>
       </table>
-      <paginator :range='2' :paginationListLength='paginationListLength'
-                 @current-page='setCurrentPage' />
+      <paginator :range="2" :paginationListLength="paginationListLength"
+                 :currentPage="currentPage" @current-page="setCurrentPage" />
     </div>
   </div>
 </template>
@@ -86,10 +86,10 @@ export default {
   },
   methods: {
     async setShowedType(type) {
-      this.currentPage = 1;
-      this.$router.push(`${this.$route.path}?page=${this.currentPage}`);
       this.showedType = type;
       this.loading = true;
+      this.currentPage = 1;
+      this.paginationListLength = 0;
       if (this.ROLE === 'ROLE_JOURNALIST') {
         await this.fetchEvents(this.getWorkerID);
       }
@@ -108,6 +108,7 @@ export default {
       }
     },
     async fetchEvents(id) {
+      console.log(this.paginationListLength, 'from req');
       this.queryString = this.showedType === 'A’zo bo’lingan' ? 'allJoined' : 'allAvailable';
       let eventsObject = (await Http.get('api/event/' + this.queryString, {
         params: {
@@ -116,6 +117,7 @@ export default {
           size: 5,
         },
       })).data.object;
+      console.log(eventsObject);
       this.paginationListLength = eventsObject.totalPages;
       if (eventsObject.content.length) {
         this.events = eventsObject.content.map((item) => {
@@ -133,7 +135,6 @@ export default {
     },
     async fetchEventsForAdmin() {
       this.queryString = (this.showedType === 'O’tgan' || this.showedType === '') ? 'allBefore' : 'allAfter';
-      console.log(this.queryString, 'queryString');
       let eventsObject = (await Http.get('api/event/' + this.queryString, {
         params: {
           page: this.currentPage,
@@ -141,6 +142,7 @@ export default {
           search: this.searchText || '',
         },
       })).data.object;
+      console.log(eventsObject);
       this.paginationListLength = eventsObject.totalPages;
       this.searchText = '';
       if (eventsObject.content.length) {
@@ -184,7 +186,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .textInfo {
   margin-top: 50px;
   text-align: center;
@@ -222,6 +224,10 @@ export default {
   }
 }
 
+.btnsGroup {
+  margin-top: 20px;
+}
+
 .btns {
   margin-left: 2px;
 }
@@ -257,11 +263,11 @@ export default {
   font-size: 16px;
 
   &:nth-child(even) {
-    background: #d9e3f0;
+    background: #f2f7fc;
   }
 
   &:nth-child(odd) {
-    background: #fff;
+    background: #ffffff;
   }
 
   .tableItem {

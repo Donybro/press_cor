@@ -1,13 +1,13 @@
 <template>
-  <div class='app-main-layout'>
+  <div class="app-main-layout">
     <SideBar
-        class='sidebar'
+        class="sidebar"
         :class='{"smallSideBar":!sidebarIsOpen}' />
-    <div class='mainContent'>
-      <Navbar class='navbar' />
-      <div class='app_page'>
-        <div v-if='!userInfoLoaded' class='spinnerWrapper'>
-          <Spinner size='huge' line-fg-color='rgba(0, 88, 191, 0.5)' />
+    <div class="mainContent">
+      <Navbar class="navbar" />
+      <div>
+        <div v-if="!userInfoLoaded" class="spinnerWrapper">
+          <Spinner size="huge" line-fg-color="rgba(0, 88, 191, 0.5)" />
         </div>
         <router-view v-else />
       </div>
@@ -55,9 +55,6 @@ export default {
   justify-content: center;
 }
 
-.app_page {
-  padding: 0 3%;
-}
 
 .sidebar {
   min-width: 18%

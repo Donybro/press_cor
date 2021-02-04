@@ -1,32 +1,33 @@
 <template>
-  <div class='wrapper'>
-    <div class='info'>
-      <div class='photo'>
+  <div class="wrapper container">
+    <div class="info">
+      <div class="photo">
+        <img v-if='getRole === "ROLE_ADMIN" || getRole === "ROLE_CREATOR"' :src="logodefault" alt="">
       </div>
-      <div v-if='ROLE==="ROLE_ADMIN"' class='name'>Administratsiya</div>
-      <div v-else class='name'>Creator</div>
+      <div v-if='ROLE==="ROLE_ADMIN"' class="name">Administratsiya</div>
+      <div v-else class="name">Creator</div>
     </div>
-    <div @click='toggleEditPasswordMode' class='licence'>
+    <div @click="toggleEditPasswordMode" class="licence">
       <span>Parolni o’zgartirish</span>
-      <img src='../assets/icons/editPasword.svg' alt=''>
+      <img src="../assets/icons/editPasword.svg" alt="">
     </div>
-    <div class='editPassword' v-if='editPasswordMode'>
-      <div class='inputField '>
-        <label for='lastPassword'>Eski parol</label>
-        <input id='lastPassword' v-model='lastPassword' type='text'>
+    <div class="editPassword" v-if="editPasswordMode">
+      <div class="inputField ">
+        <label for="lastPassword">Eski parol</label>
+        <input id="lastPassword" v-model="lastPassword" type="text">
       </div>
-      <div class='inputField '>
-        <label for='newPassword'>Yangi parol</label>
-        <input id='newPassword' v-model='newPassword' type='text'>
+      <div class="inputField ">
+        <label for="newPassword">Yangi parol</label>
+        <input id="newPassword" v-model="newPassword" type="text">
       </div>
-      <div class='inputField '>
-        <label for='newPassword2'>Yangi parolni takroran kiriting</label>
-        <input id='newPassword2' v-model='rePassword' type='text'>
+      <div class="inputField ">
+        <label for="newPassword2">Yangi parolni takroran kiriting</label>
+        <input id="newPassword2" v-model="rePassword" type="text">
       </div>
-      <div v-if='showError' class='errorText'>
+      <div v-if="showError" class="errorText">
         Parollar notogri kiritilgan!
       </div>
-      <button @click='senChanges' v-if='editPasswordMode'>
+      <button @click="senChanges" v-if="editPasswordMode">
         Tasdiqlash
       </button>
     </div>
@@ -37,6 +38,7 @@
 <script>
 
 import Http from '../common/Http';
+import logodefault from '../assets/icons/images.png';
 
 let ROLE = localStorage.getItem('ROLE');
 export default {
@@ -49,6 +51,7 @@ export default {
       rePassword: '',
       lastPassword: '',
       newPassword: '',
+      logodefault,
     };
   },
   methods: {
@@ -73,10 +76,15 @@ export default {
       this.lastPassword = '';
     },
   },
+  computed: {
+    getRole() {
+      return this.$store.getters.getRole;
+    },
+  },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -105,6 +113,12 @@ export default {
     border-radius: 50%;
     position: relative;
     margin-right: 20px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
 
     .addPhoto {
       position: absolute;

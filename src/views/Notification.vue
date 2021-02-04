@@ -1,41 +1,47 @@
 <template>
-  <div class='container'>
-    <div class='row'>
-      <div class='col'>
-        <div class='title'>Tasdiqlanishi kutilayotgan matbuot tashkilotlar va erkin jurnalistlar</div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="title">Tasdiqlanishi kutilayotgan matbuot tashkilotlar va erkin jurnalistlar</div>
       </div>
     </div>
-    <div class='row'>
-      <Table_Button_Group @showed-type='setShowedType' class='col-4 tableBtns' left-text='Tashkilotlar'
-                          right-text='Erkin jurnalistlar' />
+    <div class="row">
+      <Table_Button_Group @showed-type="sethowedType" class="col-4 tableBtns" left-text="Tashkilotlar"
+                          right-text="Erkin jurnalistlar" />
     </div>
-    <div class='tableWrapper row'>
-      <table class='table container'>
+    <div class="tableWrapper row">
+      <table class="table container">
         <thead>
-        <tr class='tableHeader row'>
-          <th class='col-6'>Tashkilot nomi</th>
-          <th class='col-2'>Litsenziya</th>
-          <th class='col-4'>Tasdiqlash</th>
+        <tr class="tableHeader row">
+          <th class="col-6">Tashkilot nomi</th>
+          <th class="col-2">Litsenziya</th>
+          <th class="col-4">Tasdiqlash</th>
         </tr>
         </thead>
-        <tbody v-if='loading'>
-        <Spinner class='spinnerWrapper' size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
+        <tbody v-if="loading">
+        <Spinner class="spinnerWrapper" size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
         </tbody>
         <tbody v-else>
-        <tr class='tableList row' v-for='(item) in notifications' :key='item.id'>
-          <td v-if='showedType==="Tashkilotlar"' class='col-6 tableItem'>{{ item.name }}</td>
-          <td v-else class='col-6 tableItem'>{{ item.firstName + ' ' + item.lastName + ' ' + item.fatherName }}</td>
-          <td class='col-2 tableItem'><img @click='getIdPdf(item.licenseId)' src='../assets/icons/download.svg'></td>
-          <td class='col-4 tableItem'>
-            <Action_Buttons />
+        <tr class="tableList row" v-for="(item) in notifications" :key="item.id">
+          <td v-if='showedType==="Tashkilotlar"' class="col-6 tableItem">{{ item.name }}</td>
+          <td v-else class="col-6 tableItem">
+            {{ item.firstName + ' ' + item.lastName + ' ' + item.fatherName }}
+          </td>
+          <td class="col-2 tableItem">
+            <a download="userLicense" :href="getHref(item)">
+              <img src="../assets/icons/download.svg">
+            </a>
+          </td>
+          <td class="col-4 tableItem">
+            <Action_Buttons :type="showedType" :id="item.id" />
           </td>
         </tr>
         </tbody>
       </table>
     </div>
-    <div class='row'>
-      <div class='col'>
-        <paginator :range='5' :pagination-list-length='paginationListLength' @current-page='setCurrentPage' />
+    <div class="row">
+      <div class="col">
+        <paginator :range="5" :pagination-list-length="paginationListLength" @current-page="setCurrentPage" />
       </div>
     </div>
   </div>
@@ -61,23 +67,20 @@ export default {
     };
   },
   methods: {
-    async setCurrentPage(page) {
-      this.currentPage = page;
+    async sethowedType(type) {
+      this.currentPage = 1;
+      this.showedType = type;
       this.loading = true;
-      if (this.showedType === 'Tashkilotlar') {
+      if (type === 'Tashkilotlar') {
         await this.getNewOrganizations();
       } else {
         await this.getNewWorkers();
       }
     },
-    async getIdPdf(id) {
-      await Http.get('api/file/' + id);
-    },
-    async setShowedType(type) {
-      this.currentPage = 1;
-      this.showedType = type;
+    async setCurrentPage(page) {
+      this.currentPage = page;
       this.loading = true;
-      if (type === 'Tashkilotlar') {
+      if (this.showedType === 'Tashkilotlar') {
         await this.getNewOrganizations();
       } else {
         await this.getNewWorkers();
@@ -109,11 +112,15 @@ export default {
       this.notifications = req.object.content;
       this.loading = false;
     },
+    getHref(item) {
+      let id = (this.showedType === 'Tashkilotlar') ? item['licenseId'] : item['certificateId'];
+      return 'http://aokaevents.tcrp.uz/api/file/' + id;
+    },
   },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .tableBtns {
   margin-left: 2px;
 }

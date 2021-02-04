@@ -1,35 +1,35 @@
 <template>
-  <form>
-    <div class='title'>Yangi tadbir qo’shish</div>
-    <div class='partsWrapper'>
-      <div class='part'>
-        <div class='main'>
-          <div class='label'>O’tkazilish kuni va vaqti</div>
-          <date-picker :lang='lang' v-model='startTime'
-                       :show-second='false' type='datetime' valueType='date'></date-picker>
+  <form class="container form">
+    <div class="title">Yangi tadbir qo’shish</div>
+    <div class="partsWrapper">
+      <div class="part">
+        <div class="main">
+          <div class="label">O’tkazilish kuni va vaqti</div>
+          <date-picker :lang="lang" v-model="startTime"
+                       :show-second="false" type="datetime" valueType="date"></date-picker>
         </div>
-        <div class='main'>
-          <div class='label'>Ro’yxatdan o’tish uchun oxirgi muhlat</div>
-          <date-picker :lang='lang' v-model='deadline'
-                       :show-second='false' type='datetime' valueType='date'></date-picker>
+        <div class="main">
+          <div class="label">Ro’yxatdan o’tish uchun oxirgi muhlat</div>
+          <date-picker :lang="lang" v-model="deadline"
+                       :show-second="false" type="datetime" valueType="date"></date-picker>
         </div>
       </div>
-      <div class='part'>
-        <div class='main'>
-          <div class='label'>Tadbir nomi</div>
-          <input v-model='eventName' type='text' class='body'>
+      <div class="part">
+        <div class="main">
+          <div class="label">Tadbir nomi</div>
+          <input v-model="eventName" type="text" class="body">
         </div>
-        <div class='main'>
-          <div class='label'>Ja’mi o’rinlar soni</div>
-          <input v-model.number='maxAmount' type='number' class='body'>
+        <div class="main">
+          <div class="label">Ja’mi o’rinlar soni</div>
+          <input v-model.number="maxAmount" type="number" class="body">
         </div>
       </div>
     </div>
-    <div class='lastPart'>
-      <div class='label'>Tadbir o’tkazilish manzili</div>
-      <div class='lastInput'>
-        <input v-model='eventAddress' type='text' class=''>
-        <button type='submit' @click.prevent='createEvent' class='btn'>Tasdiqlash</button>
+    <div class="lastPart">
+      <div class="label">Tadbir o’tkazilish manzili</div>
+      <div class="lastInput">
+        <input v-model="eventAddress" type="text" class="">
+        <button type="submit" @click.prevent="createEvent" class="btn">Tasdiqlash</button>
       </div>
     </div>
 
@@ -74,20 +74,30 @@ export default {
   },
   methods: {
     async createEvent() {
-      let req = await Http.post('api/event', {
+      let res = await Http.post('api/event', {
         name: this.eventName,
         dateTime: this.startTime,
         deadline: this.deadline,
         address: this.eventAddress,
         maxAmount: +this.maxAmount,
       });
-      console.log(req);
+      if (res.data.success) {
+        this.eventName = '';
+        this.startTime = null;
+        this.deadline = null;
+        this.eventAddress = '';
+        this.maxAmount = '';
+      }
     },
   },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
+.form {
+  margin-top: 20px;
+
+}
 
 .title {
   font-weight: bold;

@@ -1,45 +1,45 @@
 <template>
-  <div class='wrapper_event_info_new'>
-    <div class='title_event_info_new'>{{ event.name }}</div>
-    <div class='partsWrapper_event_info_new'>
-      <div class='part_event_info_new'>
-        <div class='main_event_info_new'>
-          <div class='label_event_info_new'>O’tkazilish kuni va vaqti</div>
-          <date-picker v-if='editMode' :lang='lang' v-model='dateTime'
-                       :placeholder='dateTimeString' :show-second='false' type='datetime'
-                       valueType='date'></date-picker>
-          <input v-else type='text' :placeholder='dateTimeString' :disabled='!editMode' class='body_event_info_new' />
+  <div class="wrapper_event_info_new">
+    <div class="title_event_info_new">{{ event.name }}</div>
+    <div class="partsWrapper_event_info_new">
+      <div class="part_event_info_new">
+        <div class="main_event_info_new">
+          <div class="label_event_info_new">O’tkazilish kuni va vaqti</div>
+          <date-picker v-if="editMode" :lang="lang" v-model="dateTime"
+                       :placeholder="dateTimeString" :show-second="false" type="datetime"
+                       valueType="date"></date-picker>
+          <input v-else type="text" :placeholder="dateTimeString" :disabled="!editMode" class="body_event_info_new" />
 
         </div>
-        <div class='main_event_info_new'>
-          <div class='label_event_info_new'>Ro’yxatdan o’tish uchun oxirgi muhlat</div>
-          <date-picker v-if='editMode' :lang='lang' v-model='deadline'
-                       :placeholder='deadlineString' :show-second='false' type='datetime'
-                       valueType='date'></date-picker>
-          <input v-else type='text' :placeholder='deadlineString' :disabled='!editMode' class='body_event_info_new' />
+        <div class="main_event_info_new">
+          <div class="label_event_info_new">Ro’yxatdan o’tish uchun oxirgi muhlat</div>
+          <date-picker v-if="editMode" :lang="lang" v-model="deadline"
+                       :placeholder="deadlineString" :show-second="false" type="datetime"
+                       valueType="date"></date-picker>
+          <input v-else type="text" :placeholder="deadlineString" :disabled="!editMode" class="body_event_info_new" />
         </div>
-        <div class='label_event_info_new'>Tadbir o’tkazilish manzili</div>
+        <div class="label_event_info_new">Tadbir o’tkazilish manzili</div>
       </div>
-      <div class='part_event_info_new'>
-        <div class='main_event_info_new'>
-          <div class='label_event_info_new'>Ja’mi o’rinlar soni</div>
-          <input type='number' v-model.number='maxAmount' :disabled='!editMode' class='body_event_info_new' />
+      <div class="part_event_info_new">
+        <div class="main_event_info_new">
+          <div class="label_event_info_new">Ja’mi o’rinlar soni</div>
+          <input type="number" v-model.number="maxAmount" :disabled="!editMode" class="body_event_info_new" />
         </div>
-        <div class='main'>
-          <div class='label_event_info_new'>Ro’yxatdan o’tganlar soni</div>
-          <input type='text' v-model='joinedCount' :disabled='!editMode' class='body_event_info_new' />
+        <div class="main">
+          <div class="label_event_info_new">Ro’yxatdan o’tganlar soni</div>
+          <input type="text" v-model="joinedCount" :disabled="!editMode" class="body_event_info_new" />
         </div>
       </div>
     </div>
-    <input type='text' v-model='address' :disabled='!editMode' class='body_event_info_new address_event_info_new' />
-    <div class='btnsWrapper_event_info_new'>
-      <button @click='toggleEditMode' v-if='!editMode' class='btn_event_info_new cancel_event_info_new'>
+    <input type="text" v-model="address" :disabled="!editMode" class="body_event_info_new address_event_info_new" />
+    <div class="btnsWrapper_event_info_new">
+      <button @click="toggleEditMode" v-if="!editMode" class="btn_event_info_new cancel_event_info_new">
         O’chirish
       </button>
-      <button @click='sendChanges' v-if='editMode' class='btn_event_info_new'>
+      <button @click="sendChanges" v-if="editMode" class="btn_event_info_new">
         Tasdiqlash
       </button>
-      <button @click='toggleEditMode' v-else class='btn_event_info_new '>
+      <button @click="toggleEditMode" v-else class="btn_event_info_new ">
         Tahrirlash
       </button>
     </div>
@@ -85,19 +85,20 @@ export default {
   },
   watch: {
     dateTime(val) {
-      console.log(val);
       this.dateTimeString = (new Date(val)).toLocaleString();
     },
     deadline(val) {
-      console.log(val);
       this.deadlineString = (new Date(val)).toLocaleString();
     },
   },
   mounted() {
+
     this.name = this.event.name;
     this.maxAmount = this.event.maxAmount;
     this.joinedCount = this.event.joinedCount;
     this.address = this.event.address;
+    this.dateTime = new Date(this.event.dateTime).toISOString();
+    this.deadline = new Date(this.event.deadline).toISOString();
     this.dateTimeString = (new Date(this.event.dateTime)).toLocaleString();
     this.deadlineString = (new Date(this.event.deadline)).toLocaleString();
   },
