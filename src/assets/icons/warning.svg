@@ -1,0 +1,5 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle r="9.5" transform="matrix(-1 0 0 1 10 10)" stroke="#EB4848"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11 16H9V14H11V16Z" fill="#EB4848"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11 12H9V4H11V12Z" fill="#EB4848"/>
+</svg>
