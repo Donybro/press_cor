@@ -1,14 +1,14 @@
 <template>
-  <div class="navbar_wrapper">
-    <Spinner v-if="!userInfoLoaded" size="50px" line-fg-color="rgba(0, 88, 191, 0.5)" />
-    <div v-else class="wrapperProfile">
-      <Bell v-if='getRole==="ROLE_ADMIN"' :newMessage="newMessage" class="bell" />
-      <span @click='$router.push("/profile")' class="profile">
-        <span class="photo">
-            <img v-if='getRole === "ROLE_ADMIN" || getRole === "ROLE_CREATOR"' :src="logodefault" alt="">
-            <img v-else :src='"http://aokaevents.tcrp.uz/api/file/"+pathToPhoto' alt="">
+  <div class='navbar_wrapper'>
+    <Spinner v-if='!userInfoLoaded' size='50px' line-fg-color='rgba(0, 88, 191, 0.5)' />
+    <div v-else class='wrapperProfile'>
+      <Bell v-if='getRole==="ROLE_ADMIN"' :newMessage='newMessage' class='bell' />
+      <span @click='$router.push("/profile")' class='profile'>
+        <span class='photo'>
+            <img v-if='pathToPhoto' :src='"http://aokaevents.tcrp.uz/api/file/"+pathToPhoto' alt=''>
+            <img v-if='getRole === "ROLE_ADMIN" || getRole === "ROLE_CREATOR"' :src='logodefault' alt=''>
         </span>
-          <span class="profile_title">{{ showName }}</span>
+          <span class='profile_title'>{{ showName }}</span>
       </span>
     </div>
   </div>
@@ -66,7 +66,8 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
+
 
 .navbar_wrapper {
   background-color: #fff;
@@ -75,13 +76,6 @@ export default {
   align-items: center;
   padding: 5px 0;
 }
-
-.title {
-  font-size: 20px;
-  color: #000000;
-  margin-left: 30px;
-}
-
 
 .profile {
   display: flex;
@@ -104,8 +98,7 @@ export default {
 
   .profile_title {
     margin-left: 10px;
-    font-size: 28px;
-    line-height: 33px;
+    font-size: 22px;
     color: #000000;
   }
 }
@@ -119,5 +112,33 @@ export default {
   .bell {
     margin-right: 20px;
   }
+}
+
+@media only screen and (max-width: 992px) {
+  .profile {
+    .photo {
+      width: 33px;
+      height: 33px;
+    }
+
+    .profile_title {
+      font-size: 20px;
+    }
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+  .profile {
+    .photo {
+      width: 25px;
+      height: 25px;
+    }
+
+    .profile_title {
+      font-size: 16px;
+    }
+  }
+
 }
 </style>

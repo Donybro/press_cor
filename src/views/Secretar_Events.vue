@@ -1,17 +1,17 @@
 <template>
-  <div class=''>
+  <div class='wrapper'>
     <Events_Header @search-text='pushSearchText' />
-    <Events_Container :search-text='searchText' />
+    <Events class='events' :search-text='searchText' />
   </div>
 </template>
 
 <script>
 import Events_Header from '../components/Events_Header';
-import Events_Container from './Events_Container';
+import Events from '../views/Events';
 
 export default {
   name: 'Secretar_Events',
-  components: { Events_Container, Events_Header },
+  components: { Events, Events_Header },
   data() {
     return {
       searchText: '',
@@ -19,6 +19,7 @@ export default {
   },
   methods: {
     pushSearchText(text) {
+      console.log(text);
       this.searchText = text;
     },
   },
@@ -26,5 +27,13 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
+.events {
+  flex-grow: 3;
+}
 </style>

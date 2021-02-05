@@ -1,7 +1,8 @@
 <template>
   <div class='search'>
     <input v-model='searchText' placeholder='Izlash' type='text'>
-    <img @click='emitSearchText' src='../assets/icons/search.png' class='search_icon'>
+    <img v-if='typingMode' @click='emitSearchText' src='../assets/icons/search.png' class='search_icon'>
+    <img v-else @click='clearSearchText' src='../assets/icons/searchCancel.svg' class='search_icon'>
   </div>
 </template>
 
@@ -11,6 +12,7 @@ export default {
   data() {
     return {
       searchText: '',
+      typingMode: true,
     };
   },
   methods: {
@@ -19,7 +21,12 @@ export default {
         return null;
       }
       this.$emit('search-text', this.searchText);
+      this.typingMode = false;
+    },
+    clearSearchText() {
       this.searchText = '';
+      this.$emit('search-text', this.searchText);
+      this.typingMode = true;
     },
   },
 };

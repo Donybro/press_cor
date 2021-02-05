@@ -1,29 +1,33 @@
 <template>
-  <div class="wrapper container">
-    <Journalists_Header @search-text="emitSearchText" />
-    <div class="row">
-      <Table_Button_Group class="col-3"
-                          @showed-type="setShowedType"
-                          left-text="Aktiv" right-text="Neaktiv"
-                          type="list" />
+  <div class='wrapper container'>
+    <div class='row'>
+      <Journalists_Header @search-text='emitSearchText' />
     </div>
-    <div v-if="loading" class="spinnerWrapper">
-      <Spinner size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
+    <div class='row'>
+      <Table_Button_Group class='col-3 btnGroup'
+                          @showed-type='setShowedType'
+                          left-text='Aktiv' right-text='Neaktiv'
+                          type='list' />
     </div>
-    <div class="row " v-else-if="showMessageEmpty && !loading">
-      <div class="col textInfo">
+    <div v-if='loading' class='spinnerWrapper'>
+      <Spinner size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
+    </div>
+    <div class='row spinnerWrapper' v-else-if='showMessageEmpty && !loading'>
+      <div class='col textInfo'>
         Xodimlar topilmadi !
       </div>
     </div>
-    <div v-else>
-      <div class="workersWrapper container">
-        <div class="workers_list row">
-          <div :class="colType" class="worker" v-for="worker in workers" :key="worker.id">
-            <Journalist_Card :worker="worker" />
+    <div class='workersWrapper' v-else>
+      <div class='container'>
+        <div class='workers_list row'>
+          <div :class='colType' class='worker' v-for='worker in workers' :key='worker.id'>
+            <Journalist_Card :worker='worker' />
           </div>
         </div>
       </div>
-      <paginator :range="9" :paginationListLength="paginationListLength" @current-page="setCurrentPage" />
+    </div>
+    <div v-if='!showMessageEmpty && !loading' class='paginator'>
+      <paginator :range='9' :paginationListLength='paginationListLength' @current-page='setCurrentPage' />
     </div>
   </div>
 </template>
@@ -112,9 +116,11 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.workersWrapper {
-  height: 400px;
+<style scoped lang='scss'>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .textInfo {
@@ -125,10 +131,13 @@ export default {
 }
 
 .spinnerWrapper {
-  height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.workersWrapper {
+  flex-grow: 3;
 }
 
 .workers_list {
@@ -139,6 +148,14 @@ export default {
   .worker {
     margin-bottom: 15px;
   }
+}
+
+.btnGroup {
+  margin-top: 20px;
+}
+
+.paginator {
+  margin-top: auto;
 }
 
 </style>

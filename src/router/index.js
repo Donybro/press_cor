@@ -10,7 +10,7 @@ function initialComponent() {
   } else if (ROLE === 'ROLE_ADMIN') {
     return import('../views/Organizations');
   } else if (ROLE === 'ROLE_JOURNALIST') {
-    return import('../views/Events_Container');
+    return import('../views/Events');
   } else if (ROLE === 'ROLE_CREATOR') {
     return import('../views/Secretar_Events');
   } else return import('../views/404');
@@ -74,7 +74,7 @@ function getNotification() {
 function getEvents() {
   let ROLE = localStorage.getItem('ROLE');
   if (ROLE === 'ROLE_JOURNALIST' || ROLE === 'ROLE_ORGANIZATION') {
-    return import('../views/Events_Container');
+    return import('../views/Events');
   } else if (ROLE === 'ROLE_CREATOR') {
     return import('../views/Secretar_Events');
   } else return import('../views/404');

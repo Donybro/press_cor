@@ -1,48 +1,51 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="title">Tasdiqlanishi kutilayotgan matbuot tashkilotlar va erkin jurnalistlar</div>
+  <div class='container wrapper'>
+    <div class='row'>
+      <div class='col'>
+        <div class='title'>Tasdiqlanishi kutilayotgan
+          {{ (showedType === 'Tashkilotlar') ? 'matbuot tashkilotlar' : ' erkin jurnalistlar' }}
+        </div>
       </div>
     </div>
-    <div class="row">
-      <Table_Button_Group @showed-type="sethowedType" class="col-4 tableBtns" left-text="Tashkilotlar"
-                          right-text="Erkin jurnalistlar" />
+    <div class='row'>
+      <Table_Button_Group @showed-type='sethowedType' class='col-4 tableBtns' left-text='Tashkilotlar'
+                          right-text='Erkin jurnalistlar' />
     </div>
-    <div class="tableWrapper row">
-      <table class="table container">
+    <div class='tableWrapper row'>
+      <table class='table container'>
         <thead>
-        <tr class="tableHeader row">
-          <th class="col-6">Tashkilot nomi</th>
-          <th class="col-2">Litsenziya</th>
-          <th class="col-4">Tasdiqlash</th>
+        <tr class='tableHeader row'>
+          <th class='col-6'>Tashkilot nomi</th>
+          <th class='col-2'>Litsenziya</th>
+          <th class='col-4'>Tasdiqlash</th>
         </tr>
         </thead>
-        <tbody v-if="loading">
-        <Spinner class="spinnerWrapper" size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
+        <tbody v-if='loading'>
+        <Spinner class='spinnerWrapper' size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
         </tbody>
         <tbody v-else>
-        <tr class="tableList row" v-for="(item) in notifications" :key="item.id">
-          <td v-if='showedType==="Tashkilotlar"' class="col-6 tableItem">{{ item.name }}</td>
-          <td v-else class="col-6 tableItem">
+        <tr class='tableList row' v-for='(item) in notifications' :key='item.id'>
+          <td v-if='showedType==="Tashkilotlar"' class='col-6 tableItem'>{{ item.name }}</td>
+          <td v-else class='col-6 tableItem'>
             {{ item.firstName + ' ' + item.lastName + ' ' + item.fatherName }}
           </td>
-          <td class="col-2 tableItem">
-            <a download="userLicense" :href="getHref(item)">
-              <img src="../assets/icons/download.svg">
+          <td class='col-2 tableItem'>
+            <a download='userLicense' :href='getHref(item)'>
+              <img src='../assets/icons/download.svg'>
             </a>
           </td>
-          <td class="col-4 tableItem">
-            <Action_Buttons @success="sethowedType(showedType)" :type="showedType" :id="item.id" />
+          <td class='col-4 tableItem'>
+            <Action_Buttons @success='sethowedType(showedType)' :type='showedType' :id='item.id' />
           </td>
         </tr>
         </tbody>
+        <div class='infoText' v-if='!notifications.length && !loading'>
+          Yangi sorovlar topilmadi
+        </div>
       </table>
     </div>
-    <div class="row">
-      <div class="col">
-        <paginator :range="5" :pagination-list-length="paginationListLength" @current-page="setCurrentPage" />
-      </div>
+    <div class='row paginator'>
+      <paginator :range='5' :pagination-list-length='paginationListLength' @current-page='setCurrentPage' />
     </div>
   </div>
 </template>
@@ -120,9 +123,23 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
 .tableBtns {
   margin-left: 2px;
+}
+
+.infoText {
+  text-align: center;
+  padding-top: 24px;
+  font-weight: bold;
+  font-size: 24px;
 }
 
 .title {
@@ -192,7 +209,6 @@ export default {
 }
 
 .tableWrapper {
-  height: 410px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -203,5 +219,9 @@ export default {
   align-items: center;
   justify-content: center;
   height: 300px;
+}
+
+.paginator {
+  margin-top: auto;
 }
 </style>

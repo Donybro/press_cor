@@ -180,15 +180,42 @@ export default {
   }
 }
 
-@media (max-width: 992px) {
-  .header {
-    .title {
-      font-size: 22px;
-    }
-  }
-}
-
 .menu_list {
   font-size: 18px;
 }
+
+@media only screen and (max-width: 1100px) {
+  .title {
+    font-size: 18px;
+
+    img {
+      width: 28px;
+      height: 20px;
+      margin-left: 20px;
+    }
+
+    span {
+      margin-left: 15px;
+    }
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+  .title {
+    font-size: 16px;
+
+    img {
+      width: 24px;
+      height: 17px;
+      margin-left: 10px;
+    }
+
+    span {
+      margin-left: 10px;
+    }
+  }
+
+}
+
 </style>

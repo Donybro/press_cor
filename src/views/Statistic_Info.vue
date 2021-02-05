@@ -55,7 +55,7 @@
           </td>
         </tr>
         </tbody>
-        <tr v-else class='infoText'>Royxatda hech kim topilmadi</tr>
+        <div v-else class='infoText'>Royxatda hech kim topilmadi</div>
       </table>
     </div>
     <paginator :pagination-list-length='paginationListLength' :range='5' @current-page='setCurrentPage' />
@@ -109,9 +109,9 @@ export default {
 
 .infoText {
   text-align: center;
-  padding-top: 22px;
+  padding-top: 24px;
   font-weight: bold;
-  color: #0058BF;
+  font-size: 24px;
 }
 
 .tableHeader {

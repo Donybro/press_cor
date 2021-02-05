@@ -1,29 +1,32 @@
 <template>
-  <div class="wrapper container">
-    <div class="row">
-      <div class="col">
-        <div class="header">
-          <span class="title">Matbuot tashkilotlar ro’yxati</span>
+  <div class='wrapper container'>
+    <div class='row'>
+      <div class='col'>
+        <div class='header'>
+          <span class='title'>Matbuot tashkilotlar ro’yxati</span>
         </div>
       </div>
     </div>
-    <div class="menuWrapper row">
-      <Table_Button_Group @showed-type="setShowedType" class="buttons col-3" left-text="Aktiv" right-text="Neaktiv"
-                          type="list" />
-      <SearchInput @search-text="setSearchText" class="col-5" />
+    <div class='menuWrapper row'>
+      <Table_Button_Group @showed-type='setShowedType' class='buttons col-3' left-text='Aktiv' right-text='Neaktiv'
+                          type='list' />
+      <SearchInput @search-text='setSearchText' class='col-5' />
     </div>
-    <Spinner class="organizationsList row" v-if="loading" size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
-    <div v-else-if="!loading && organizations.length" class="organizationsList row">
-      <div v-for="org in organizations" :key="org.id" :class="colType" @click='$router.push("/organizations/"+org.id)'>
-        <Organization_Card :organization="org" class="card" />
+    <Spinner class='organizationsList row' v-if='loading' size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
+    <div class='listWrapper' v-else-if='!loading && organizations.length'>
+      <div class='organizationsList row'>
+        <div v-for='org in organizations' :key='org.id' :class='colType'
+             @click='$router.push("/organizations/"+org.id)'>
+          <Organization_Card :organization='org' class='card' />
+        </div>
       </div>
     </div>
-    <div class="organizationsList row" v-else>
-      <div class="col textInfo">Topilmadi</div>
+    <div class='organizationsList row' v-else>
+      <div class='col textInfo'>Topilmadi</div>
     </div>
-    <div v-if="!loading && organizations.length" class="row">
-      <paginator class="paginator" :paginationListLength="paginationListLength" @current-page="setCurrentPage"
-                 :range="3" />
+    <div v-if='!loading && organizations.length' class='row paginator'>
+      <paginator class='paginator' :paginationListLength='paginationListLength' @current-page='setCurrentPage'
+                 :range='3' />
     </div>
   </div>
 </template>
@@ -108,10 +111,13 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+
 }
 
 .textInfo {
@@ -120,6 +126,7 @@ export default {
   font-size: 24px;
   color: #0058BF;;
 }
+
 
 .header {
   margin-top: 10px;
@@ -150,5 +157,9 @@ export default {
   .card {
     margin-bottom: 15px;
   }
+}
+
+.paginator {
+  margin-top: auto;
 }
 </style>

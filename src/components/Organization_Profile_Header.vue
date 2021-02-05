@@ -1,68 +1,82 @@
 <template>
-  <div class="wrapper container">
-    <div class="info">
-      <div class="photo"></div>
-      <div class="name">{{ info.name }}</div>
-    </div>
-    <div class="workerState">
-      <div class="isActive">
-        <div class="formField">
-          <label class="container">Aktiv
-            <input v-model="isActive" type="radio" :value="true" checked="checked" name="radio">
-            <span class="checkmark"></span>
-          </label>
-        </div>
-        <div class="formField">
-          <label class="container">Aktiv emas
-            <input v-model="isActive" type="radio" :value="false" checked="checked" name="radio">
-            <span class="checkmark"></span>
-          </label>
-        </div>
+  <div class=''>
+    <Spinner v-if='loading' class='row' size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
+    <div v-else class='wrapper container'>
+      <div class='info'>
+        <div class='photo'></div>
+        <div class='name'>{{ info.name }}</div>
       </div>
-      <div @click="saveChanges" class="btn">Saqlash</div>
-    </div>
-
-    <div class="phone">
-      <div class="title mb-2">Telefon raqam</div>
-      {{ info.phoneNumber }}
+      <div class='workerState'>
+        <div class='isActive'>
+          <div class='formField'>
+            <label class='container'>Aktiv
+              <input v-model='isActive' type='radio' :value='true' checked='checked' name='radio'>
+              <span class='checkmark'></span>
+            </label>
+          </div>
+          <div class='formField'>
+            <label class='container'>Aktiv emas
+              <input v-model='isActive' type='radio' :value='false' checked='checked' name='radio'>
+              <span class='checkmark'></span>
+            </label>
+          </div>
+        </div>
+        <div @click='saveChanges' class='btn'>Saqlash</div>
+      </div>
+      <div class='phone'>
+        <div class='title mb-2'>Telefon raqam</div>
+        {{ info.phoneNumber }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Http from '../common/Http';
+import Spinner from 'vue-simple-spinner';
 
 export default {
   name: 'Organization_Profile_Header',
+  components: { Spinner },
   props: ['info'],
   data() {
     return {
       isActive: true,
+      loading: true,
     };
   },
   watch: {
-    info(info) {
-      if (info.id) {
-        this.isActive = this.info.status === 'ACTIVE';
-      }
+    info: {
+      immediate: true,
+      handler(info) {
+        if (info.id) {
+          this.isActive = this.info.status === 'ACTIVE';
+          this.loading = false;
+        }
+      },
     },
   },
   methods: {
     saveChanges() {
-      Http.post('api/organ/change', {
-        id: this.info.id,
-        status: this.isActive ? 'ACTIVE' : 'INACTIVE',
-      }, {
-        headers: {
-          Authorization: localStorage.getItem('tokenType') + ' ' + localStorage.getItem('accessToken'),
-        },
-      });
+      try {
+        Http.post('api/organ/change', {
+          id: this.info.id,
+          status: this.isActive ? 'ACTIVE' : 'INACTIVE',
+        });
+        this.$alert('Saqlandi!', '', 'success');
+      } catch (e) {
+        this.$alert('Xatolik yuz berdi!', '', 'error');
+        console.log(e);
+      }
     },
+  },
+  mounted() {
+    console.log('Header');
   },
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 
 .container {
   display: block;

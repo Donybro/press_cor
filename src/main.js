@@ -7,6 +7,7 @@ import Spinner from 'vue-simple-spinner';
 import Vuelidate from 'vuelidate';
 import dateFilter from './filters/date';
 import VueSimpleAlert from 'vue-simple-alert';
+import './assets/css/datePicker.css';
 
 Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false;

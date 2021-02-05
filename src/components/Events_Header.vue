@@ -1,9 +1,9 @@
 <template>
-  <div class="header container">
-    <span class="title">Tadbirlar ro’yxati</span>
-    <SearchInput @search-text="emitSearchText" class="search" />
-    <router-link class="addnew" tag="div" to="/addEvent">
-      <img src="../assets/icons/AddEvent.svg" class="addEventIcon">
+  <div class='header container'>
+    <span class='title'>Tadbirlar ro’yxati</span>
+    <SearchInput @search-text='emitSearchText' class='search' />
+    <router-link class='addnew' tag='div' to='/addEvent'>
+      <img src='../assets/icons/AddEvent.svg' class='addEventIcon'>
       <span>Yangi tadbir</span>
     </router-link>
   </div>
@@ -24,7 +24,7 @@ export default {
 </script>
 
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .header {
   margin-top: 10px;
   display: flex;

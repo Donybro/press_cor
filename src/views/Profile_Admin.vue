@@ -1,33 +1,33 @@
 <template>
-  <div class="wrapper container">
-    <div class="info">
-      <div class="photo">
-        <img v-if='getRole === "ROLE_ADMIN" || getRole === "ROLE_CREATOR"' :src="logodefault" alt="">
+  <div class='wrapper container'>
+    <div class='info'>
+      <div class='photo'>
+        <img v-if='getRole === "ROLE_ADMIN" || getRole === "ROLE_CREATOR"' :src='logodefault' alt=''>
       </div>
-      <div v-if='ROLE==="ROLE_ADMIN"' class="name">Administratsiya</div>
-      <div v-else class="name">Creator</div>
+      <div v-if='ROLE==="ROLE_ADMIN"' class='name'>Administratsiya</div>
+      <div v-else class='name'>Creator</div>
     </div>
-    <div @click="toggleEditPasswordMode" class="licence">
+    <div @click='toggleEditPasswordMode' class='licence'>
       <span>Parolni o’zgartirish</span>
-      <img src="../assets/icons/editPasword.svg" alt="">
+      <img src='../assets/icons/editPasword.svg' alt=''>
     </div>
-    <div class="editPassword" v-if="editPasswordMode">
-      <div class="inputField ">
-        <label for="lastPassword">Eski parol</label>
-        <input id="lastPassword" v-model="lastPassword" type="text">
+    <div class='editPassword' v-if='editPasswordMode'>
+      <div class='inputField '>
+        <label for='lastPassword'>Eski parol</label>
+        <input id='lastPassword' v-model='lastPassword' type='password'>
       </div>
-      <div class="inputField ">
-        <label for="newPassword">Yangi parol</label>
-        <input id="newPassword" v-model="newPassword" type="text">
+      <div class='inputField '>
+        <label for='newPassword'>Yangi parol</label>
+        <input id='newPassword' v-model='newPassword' type='password'>
       </div>
-      <div class="inputField ">
-        <label for="newPassword2">Yangi parolni takroran kiriting</label>
-        <input id="newPassword2" v-model="rePassword" type="text">
+      <div class='inputField '>
+        <label for='newPassword2'>Yangi parolni takroran kiriting</label>
+        <input id='newPassword2' v-model='rePassword' type='password'>
       </div>
-      <div v-if="showError" class="errorText">
+      <div v-if='showError' class='errorText'>
         Parollar notogri kiritilgan!
       </div>
-      <button @click="senChanges" v-if="editPasswordMode">
+      <button @click='senChanges' v-if='editPasswordMode'>
         Tasdiqlash
       </button>
     </div>
@@ -66,14 +66,21 @@ export default {
         }, 3000);
         return null;
       }
-      Http.patch('api/user', {
-        oldPassword: this.lastPassword,
-        password: this.newPassword,
-        rePassword: this.rePassword,
-      });
-      this.rePassword = '';
-      this.newPassword = '';
-      this.lastPassword = '';
+      try {
+        Http.patch('api/user', {
+          oldPassword: this.lastPassword,
+          password: this.newPassword,
+          rePassword: this.rePassword,
+        });
+        this.rePassword = '';
+        this.newPassword = '';
+        this.lastPassword = '';
+        this.$alert('Saqlandi!', '', 'success');
+        this.toggleEditPasswordMode();
+      } catch (e) {
+        this.$alert('Xatolik yuz berdi!', '', 'error');
+        console.log(e);
+      }
     },
   },
   computed: {
@@ -84,7 +91,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -166,12 +173,15 @@ export default {
   color: #0058BF;
   cursor: pointer;
   display: flex;
+  align-items: center;
   position: relative;
   width: 90%;
   margin: 30px 0;
 
   img {
     margin-left: 10px;
+    height: 20px;
+
   }
 }
 
@@ -184,7 +194,7 @@ export default {
 }
 
 button {
-  width: 30%;
+  width: 150px;
   background: #0058BF;
   border-radius: 30px;
   font-size: 18px;

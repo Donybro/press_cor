@@ -1,0 +1,19 @@
+.mx-datepicker {
+    width: 70%;
+    height: 39px;
+
+}
+
+.mx-datepicker .mx-input-wrapper {
+    height: 100%;
+}
+
+.mx-datepicker .mx-input {
+    height: 100%;
+    border: 1px solid #DADADA;
+    color: #000;
+    font-size: 16px;
+    border-radius: 0;
+    cursor: pointer;
+
+}
