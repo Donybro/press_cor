@@ -1,85 +1,85 @@
 <template>
-  <form class="fields">
-    <div class="main">
-      <md-field class="inputField" :class="{'md-invalid':$v.login.$error}">
+  <form class='fields'>
+    <div class='main'>
+      <md-field class='inputField' :class="{'md-invalid':$v.login.$error}">
         <label>Login</label>
-        <md-input v-model="login"></md-input>
+        <md-input v-model='login'></md-input>
       </md-field>
       <span
-          v-if="($v.login.$error)"
-          class="md-error helper-text"
+          v-if='($v.login.$error)'
+          class='md-error helper-text'
       >
-            <img src="../assets/icons/warning.svg">
+            <img src='../assets/icons/warning.svg'>
             Loginni kiriting
         </span>
     </div>
-    <div class="main">
-      <md-field class="inputField" :class="{'md-invalid':$v.password.$error}">
-        <label for="password">Parol</label>
-        <md-input v-model="password" id="password" type="password"></md-input>
+    <div class='main'>
+      <md-field class='inputField' :class="{'md-invalid':$v.password.$error}">
+        <label>Parol</label>
+        <md-input v-model='password' type='password'></md-input>
       </md-field>
       <span
-          v-if="($v.password.$error)"
-          class="md-error helper-text"
+          v-if='($v.password.$error)'
+          class='md-error helper-text'
       >
-            <img src="../assets/icons/warning.svg">
+            <img src='../assets/icons/warning.svg'>
             Parolni kiriting
         </span>
     </div>
-    <div class="main">
-      <md-field class="inputField" :class="{'md-invalid':$v.rePassword.$error}">
-        <label for="rePassword">Parolni qayta kiriting</label>
-        <md-input v-model="rePassword" id="rePassword" type="password"></md-input>
+    <div class='main'>
+      <md-field class='inputField' :class="{'md-invalid':$v.rePassword.$error}">
+        <label>Parolni qayta kiriting</label>
+        <md-input v-model='rePassword' type='password'></md-input>
       </md-field>
       <span
-          v-if="($v.rePassword.$error)"
-          class="md-error helper-text"
+          v-if='($v.rePassword.$error)'
+          class='md-error helper-text'
 
       >
-            <img src="../assets/icons/warning.svg">
+            <img src='../assets/icons/warning.svg'>
             Parolni kiriting
         </span>
     </div>
-    <div class="main">
-      <md-field class="inputField" :class="{'md-invalid':$v.phoneNumber.$error}">
-        <label for="phoneNumber">Telefon</label>
-        <md-input v-model="phoneNumber" id="phoneNumber" type="text"></md-input>
+    <div class='main'>
+      <md-field class='inputField' :class="{'md-invalid':$v.phoneNumber.$error}">
+        <label>Telefon</label>
+        <md-input v-model='phoneNumber' type='text'></md-input>
       </md-field>
       <span
-          v-if="($v.phoneNumber.$error)"
-          class="md-error helper-text"
+          v-if='($v.phoneNumber.$error)'
+          class='md-error helper-text'
       >
-            <img src="../assets/icons/warning.svg">
+            <img src='../assets/icons/warning.svg'>
             Telefonni  kiriting
         </span>
     </div>
-    <div class="main">
-      <md-field class="inputField" :class="{'md-invalid':$v.name.$error}">
-        <label for="name">Tashkilot nomi</label>
-        <md-input v-model="name" id="name" type="text"></md-input>
+    <div class='main'>
+      <md-field class='inputField' :class="{'md-invalid':$v.name.$error}">
+        <label>Tashkilot nomi</label>
+        <md-input v-model='name' type='text'></md-input>
       </md-field>
       <span
-          v-if="($v.name.$error)"
-          class="md-error helper-text"
+          v-if='($v.name.$error)'
+          class='md-error helper-text'
       >
-            <img src="../assets/icons/warning.svg">
+            <img src='../assets/icons/warning.svg'>
             Tashkilot nomini kiriting
         </span>
     </div>
-    <div class="filesWrapper">
-      <img v-if="photoLoaded" src="../assets/icons/successForm.svg">
-      <img v-if="!photoLoaded && showPhotoError" src="../assets/icons/warning.svg">
-      <UploadPhoto @photo-seted="setPhoto" title="Logotip yuklash" />
+    <div class='filesWrapper'>
+      <img v-if='photoLoaded' src='../assets/icons/successForm.svg'>
+      <img v-if='!photoLoaded && showPhotoError' src='../assets/icons/warning.svg'>
+      <UploadPhoto @photo-seted='setPhoto' title='Logotip yuklash' />
     </div>
-    <div class="filesWrapper">
-      <img v-if="licenseLoaded" src="../assets/icons/successForm.svg">
-      <img v-if="!licenseLoaded && showLicenseError" src="../assets/icons/warning.svg">
-      <License @license-seted="setLicense" logo="cloud"
-               title="Litsenziya yuklash (pdf, jpg)" />
+    <div class='filesWrapper'>
+      <img v-if='licenseLoaded' src='../assets/icons/successForm.svg'>
+      <img v-if='!licenseLoaded && showLicenseError' src='../assets/icons/warning.svg'>
+      <License @license-seted='setLicense' logo='cloud'
+               title='Litsenziya yuklash (pdf, jpg)' />
     </div>
-    <div class="btnWrapper">
-      <button type="submit" @click.prevent="sendHandler" :disabled="sending">
-        <Spinner v-if="sending" size="20px" line-fg-color="rgba(0, 88, 191, 0.5)" />
+    <div class='btnWrapper'>
+      <button type='submit' @click.prevent='sendHandler' :disabled='sending'>
+        <Spinner v-if='sending' size='20px' line-fg-color='rgba(0, 88, 191, 0.5)' />
         <span v-else> Ro’yxatdan o’tish</span>
       </button>
     </div>
@@ -180,7 +180,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 
 
 .errorMsg {

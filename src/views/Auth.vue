@@ -9,9 +9,9 @@
     <div class='fields'>
       <div class='content'>
         <div class='main'>
-          <div class='inputField'>
-            <label class='' for='login'>Login</label>
-            <input
+          <md-field class='inputField' :class="{'md-invalid':$v.login.$error}">
+            <label for='login'>Login</label>
+            <md-input
                 v-model='login'
                 id='login'
                 type='text'
@@ -20,20 +20,20 @@
                 ($v.login.$dirty && !$v.login.required) ||
                 ($v.login.$dirty && !$v.login.minLength)
             }'
-            >
-          </div>
+            ></md-input>
+          </md-field>
           <span
               v-if='($v.login.$error)'
-              class='helper-text'
+              class='helper-text md-error '
           >
             <img src='../assets/icons/warning.svg'>
             Login ni kiriting
         </span>
         </div>
-        <div class='main lastInput'>
-          <div class='inputField'>
+        <div class='main lastInput' :class="{'md-invalid':$v.password.$error}">
+          <md-field class='inputField'>
             <label for='password'>Parol</label>
-            <input
+            <md-input
                 v-model='password'
                 id='password'
                 type='password'
@@ -41,9 +41,9 @@
               "invalid":
                 ($v.password.$dirty && !$v.password.required) ||
                 ($v.password.$dirty && !$v.password.minLength)
-            }'>
-          </div>
-          <span class='helper-text' v-if='$v.password.$dirty && !$v.password.required'><img
+            }'></md-input>
+          </md-field>
+          <span class='helper-text md-error ' v-if='$v.password.$dirty && !$v.password.required'><img
               src='../assets/icons/warning.svg'>
           Parol ni kiriting
         </span>
@@ -208,8 +208,10 @@ export default {
 
 .main {
   display: flex;
+  align-items: center;
   flex-direction: column;
-  height: 80px;
+  margin-bottom: 15px;
+  height: 62px;
 
   &:last-child {
     margin-bottom: 30px;
@@ -218,23 +220,44 @@ export default {
 
 .inputField {
   display: flex;
-  margin: 0 auto;
+  width: 80%;
+  border-bottom: 2px solid rgba(0, 88, 191, 0.3);
+}
+
+
+input {
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  padding: 0 15px;
+  font-size: 22px;
+}
+
+.helper-text {
+  font-size: 16px;
+  color: #EB4848;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  width: 80%;
+
+
+  img {
+    margin-right: 10px;
+  }
+}
+
+label {
+  color: rgba(0, 88, 191, 0.5);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.md-invalid {
+  border-bottom: 2px solid #EB4848;
 
   label {
-    color: rgba(0, 88, 191, 0.5);
-    font-size: 26px;
-    border-bottom: 2px solid rgba(0, 88, 191, 0.3);
-    cursor: pointer;
-  }
-
-  input {
-    cursor: pointer;
-    outline: none;
-    width: 100%;
-    border: none;
-    border-bottom: 2px solid rgba(0, 88, 191, 0.3);
-    padding: 0 15px;
-    font-size: 22px;
+    color: #EB4848;
   }
 }
 
@@ -259,5 +282,9 @@ export default {
   border: none;
   border-bottom: 2px solid rgba(235, 72, 72, .5);
   //background: #EB4848;
+}
+
+.md-field {
+  margin: 0;
 }
 </style>

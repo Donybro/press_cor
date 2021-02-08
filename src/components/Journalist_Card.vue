@@ -1,26 +1,26 @@
 <template>
-  <div class="main">
-    <div @click="$router.push(`/profile/${worker.id}`)" class="wrapper">
-      <div class="">
-        <div class="photo">
-          <img :src="'http://aokaevents.tcrp.uz/api/file'+worker.photoId" alt="">
+  <div class='main'>
+    <div @click='$router.push(`/profile/${worker.id}`)' class='wrapper'>
+      <div class=''>
+        <div class='photo'>
+          <img :src="'http://aokaevents.tcrp.uz/api/file/'+worker.photoId" alt=''>
         </div>
       </div>
-      <div class="info">
-        <div class="name">
+      <div class='info'>
+        <div class='name'>
           {{ worker.lastName }}
           {{ worker.firstName }}
           {{ worker.fatherName }}
         </div>
-        <div class="job">
+        <div class='job'>
           {{ worker.position }}
         </div>
       </div>
     </div>
-    <div class="id">
-      <div @click="getLicense" class="id_body">
+    <div class='id'>
+      <div @click='getLicense' class='id_body'>
         <span>ID karta</span>
-        <img class="icon" src="../assets/icons/download.svg">
+        <img class='icon' src='../assets/icons/download.svg'>
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .main {
   background: #fff;
   border-radius: 6px;
