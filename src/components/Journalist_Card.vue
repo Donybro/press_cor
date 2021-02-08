@@ -3,7 +3,7 @@
     <div @click="$router.push(`/profile/${worker.id}`)" class="wrapper">
       <div class="">
         <div class="photo">
-          <img :src="worker.photo" alt="">
+          <img :src="'http://aokaevents.tcrp.uz/api/file'+worker.photoId" alt="">
         </div>
       </div>
       <div class="info">
@@ -35,11 +35,20 @@ export default {
   name: 'Journalist_Card',
   props: ['worker'],
   mounted() {
+    console.log(this.worker);
   },
   methods: {
     async getLicense() {
-      let file = await Http.get('http://aokaevents.tcrp.uz/api/journalist/QR/' + this.worker.id);
-      fileDownload(file, 'license.pdf');
+      if (!this.worker.photoId) {
+        this.$alert('Id kartani xodim rasimisiz yuklab bo`lmaydi!', '', 'error');
+        return null;
+      }
+      let file = await Http({
+        url: 'http://aokaevents.tcrp.uz/api/journalist/QR/' + this.worker.id,
+        method: 'GET',
+        responseType: 'blob',
+      });
+      fileDownload(file.data, 'license.pdf');
     },
   },
 };

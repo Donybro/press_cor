@@ -1,8 +1,8 @@
 <template>
-  <div class='search'>
-    <input v-model='searchText' placeholder='Izlash' type='text'>
-    <img v-if='typingMode' @click='emitSearchText' src='../assets/icons/search.png' class='search_icon'>
-    <img v-else @click='clearSearchText' src='../assets/icons/searchCancel.svg' class='search_icon'>
+  <div class="search">
+    <input v-model="searchText" placeholder="Izlash" type="text">
+    <img v-if="typingMode" @click="emitSearchText" src="../assets/icons/search.png" class="search_icon">
+    <img v-else @click="clearSearchText" src="../assets/icons/searchCancel.svg" class="search_icon">
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .search {
   position: relative;
   padding: 0;
@@ -55,12 +55,56 @@ export default {
   }
 
   .search_icon {
+    position: absolute;
     cursor: pointer;
     width: 18px;
     height: 18px;
-    position: absolute;
+
     top: 9px;
     right: 20px;
+  }
+}
+
+
+@media only screen and (max-width: 992px) {
+  .search {
+    input {
+      height: 35px;
+      font-size: 16px;
+      padding-left: 15px;
+    }
+
+    input::-webkit-input-placeholder {
+      font-size: 16px;
+    }
+
+    .search_icon {
+      width: 16px;
+      height: 16px;
+      top: 9px;
+      right: 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .search {
+    input {
+      height: 30px;
+      font-size: 14px;
+      padding-left: 15px;
+    }
+
+    input::-webkit-input-placeholder {
+      font-size: 14px;
+    }
+
+    .search_icon {
+      width: 13px;
+      height: 13px;
+      top: 9px;
+      right: 20px;
+    }
   }
 }
 </style>

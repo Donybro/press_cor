@@ -1,71 +1,71 @@
 <template>
-  <form class='container form'>
-    <div class='title'>Yangi tadbir qo’shish</div>
-    <div class='partsWrapper'>
-      <div class='part'>
-        <div class='main'>
-          <div class='label'>O’tkazilish kuni va vaqti</div>
-          <date-picker :lang='lang' v-model='startTime'
-                       :show-second='false' type='datetime' valueType='date'>
+  <form class="container form">
+    <div class="title">Yangi tadbir qo’shish</div>
+    <div class="partsWrapper">
+      <div class="part">
+        <div class="main">
+          <div class="label">O’tkazilish kuni va vaqti</div>
+          <date-picker :lang="lang" v-model="startTime"
+                       format="DD.MM.YYYY , HH:mm" :show-second="false" type="datetime" valueType="date">
           </date-picker>
           <span
-              v-if='($v.startTime.$error)'
-              class='helper-text'
+              v-if="($v.startTime.$error)"
+              class="helper-text"
           >
-            <img src='../assets/icons/warning.svg'>
-            Ismni kiriting
+            <img src="../assets/icons/warning.svg">
+          O’tkazilish kuni va vaqtini kiriting
         </span>
         </div>
-        <div class='main'>
-          <div class='label'>Ro’yxatdan o’tish uchun oxirgi muhlat</div>
-          <date-picker :lang='lang' v-model='deadline'
-                       :show-second='false' type='datetime' valueType='date'></date-picker>
+        <div class="main">
+          <div class="label">Ro’yxatdan o’tish uchun oxirgi muhlat</div>
+          <date-picker :lang="lang" v-model="deadline"
+                       format="DD.MM.YYYY , HH:mm" :show-second="false" type="datetime" valueType="date"></date-picker>
           <span
-              v-if='($v.deadline.$error)'
-              class='helper-text'
+              v-if="($v.deadline.$error)"
+              class="helper-text"
           >
-            <img src='../assets/icons/warning.svg'>
-            Ismni kiriting
+            <img src="../assets/icons/warning.svg">
+            Ro’yxatdan o’tish uchun oxirgi muhlatni kiriting
         </span>
         </div>
       </div>
-      <div class='part'>
-        <div class='main'>
-          <div class='label'>Tadbir nomi</div>
-          <input v-model='eventName' type='text' class='body'>
+      <div class="part">
+        <div class="main">
+          <div class="label">Tadbir nomi</div>
+          <input v-model="eventName" type="text" class="body">
           <span
-              v-if='($v.eventName.$error)'
-              class='helper-text'
+              v-if="($v.eventName.$error)"
+              class="helper-text"
           >
-            <img src='../assets/icons/warning.svg'>
-            Ismni kiriting
+            <img src="../assets/icons/warning.svg">
+            Tadbir nomini kiriting
         </span>
         </div>
-        <div class='main'>
-          <div class='label'>Ja’mi o’rinlar soni</div>
-          <input v-model.number='maxAmount' type='number' class='body'>
+        <div class="main">
+          <div class="label">Ja’mi o’rinlar soni</div>
+          <input v-model.number="maxAmount" type="number" class="body">
           <span
-              v-if='($v.maxAmount.$error)'
-              class='helper-text'
+              v-if="($v.maxAmount.$error)"
+              class="helper-text"
           >
-            <img src='../assets/icons/warning.svg'>
-            Ismni kiriting
+            <img src="../assets/icons/warning.svg">
+            O’rinlar sonini kiriting
         </span>
         </div>
       </div>
     </div>
-    <div class='lastPart'>
-      <div class='label'>Tadbir o’tkazilish manzili</div>
-      <div class='lastInput'>
-        <input v-model='eventAddress' type='text' class=''>
+    <div class="lastPart">
+      <div class="label">Tadbir o’tkazilish manzili</div>
+      <div class="lastInput">
+        <input v-model="eventAddress" type="text" class="">
         <span
-            v-if='($v.eventAddress.$error)'
-            class='helper-text'
+            v-if="($v.eventAddress.$error)"
+            class="helper-text"
         >
-            <img src='../assets/icons/warning.svg'>
-            Ismni kiriting
+            <img src="../assets/icons/warning.svg">
+         Tadbir o’tkazilish manzilini kiriting
         </span>
-        <button type='submit' @click.prevent='createEvent' class='btn'>Tasdiqlash</button>
+        <button type="submit" @click.prevent="createEvent" class="btn">Tasdiqlash</button>
       </div>
     </div>
 
@@ -141,6 +141,7 @@ export default {
         }
         this.$v.$reset();
         this.$alert('Tadbir qoshildi!', '', 'success');
+        this.$router.push('/events');
       } catch (e) {
         this.$alert('Xatolik yuz berdi!', '', 'error');
         console.log(e);
@@ -151,7 +152,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 
 
 .form {

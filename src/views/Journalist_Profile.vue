@@ -38,15 +38,15 @@
         <div class="mb-4" v-if="editPasswordMode">
           <div class="inputField mb-4">
             <label for="lastPassword">Eski parol</label>
-            <input id="lastPassword" v-model="oldPassword" type="text">
+            <input id="lastPassword" v-model="oldPassword" type="password">
           </div>
           <div class="inputField mb-4">
             <label for="newPassword">Yangi parol</label>
-            <input id="newPassword" v-model="password" type="text">
+            <input id="newPassword" v-model="password" type="password">
           </div>
           <div class="inputField mb-4">
             <label for="newPassword2">Yangi parolni takroran kiriting</label>
-            <input id="newPassword2" v-model="rePassword" type="text">
+            <input id="newPassword2" v-model="rePassword" type="password">
           </div>
         </div>
         <button @click="sendChanges" v-if="editPasswordMode">
@@ -81,8 +81,12 @@ export default {
   },
   methods: {
     async getLicense() {
-      let file = await Http.get('http://aokaevents.tcrp.uz/api/journalist/QR/' + this.getWorkerState.id);
-      fileDownload(file, 'license.pdf');
+      let file = await Http({
+        url: 'http://aokaevents.tcrp.uz/api/journalist/QR/' + this.getWorkerState.id,
+        method: 'GET',
+        responseType: 'blob',
+      });
+      fileDownload(file.data, 'license.pdf');
     },
     toggleEditPasswordMode() {
       this.editPasswordMode = !this.editPasswordMode;
@@ -100,6 +104,10 @@ export default {
       await this.sendChanges();
     },
     async sendChanges() {
+      if (this.password !== this.rePassword) {
+        this.$alert('Parollarni xato kiritilgan!', '', 'error');
+        return null;
+      }
       let workerState = this.getWorkerState;
       let organizationName = workerState.organizationName;
       let sendObj = {
@@ -121,14 +129,21 @@ export default {
       if (this.photoId) {
         sendObj.photoId = this.photoId;
       }
-      let res = await Http.patch('api/journalist', sendObj);
-      if (res.data.success) {
+      try {
+        await Http.patch('api/journalist', sendObj);
         this.password = '';
         this.rePassword = '';
         this.oldPassword = '';
-        this.toggleEditPasswordMode();
+        if (this.editPasswordMode) {
+          this.toggleEditPasswordMode();
+        }
+        this.$store.dispatch('me');
+        this.$alert('Saqlandi!', '', 'success');
+      } catch (e) {
+        console.log(e);
+        this.$alert('Xatolik yuz berdi!', '', 'error');
       }
-      await this.$store.dispatch('me');
+
     },
   },
   computed: {

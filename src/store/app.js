@@ -26,6 +26,8 @@ export default {
           dispatch('setWorkerInfo', req.data.object);
         } else if (role === 'ROLE_ORGANIZATION') {
           dispatch('setOrganizationInfo', req.data.object);
+        } else if (role === 'ROLE_ADMIN') {
+          dispatch('setAdminInfo')
         }
         commit('setUserInfoLoaded');
         return true;

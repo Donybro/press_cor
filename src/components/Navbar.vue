@@ -1,14 +1,19 @@
 <template>
-  <div class='navbar_wrapper'>
-    <Spinner v-if='!userInfoLoaded' size='50px' line-fg-color='rgba(0, 88, 191, 0.5)' />
-    <div v-else class='wrapperProfile'>
-      <Bell v-if='getRole==="ROLE_ADMIN"' :newMessage='newMessage' class='bell' />
-      <span @click='$router.push("/profile")' class='profile'>
-        <span class='photo'>
-            <img v-if='pathToPhoto' :src='"http://aokaevents.tcrp.uz/api/file/"+pathToPhoto' alt=''>
-            <img v-if='getRole === "ROLE_ADMIN" || getRole === "ROLE_CREATOR"' :src='logodefault' alt=''>
+  <div class="navbar_wrapper">
+    <Spinner v-if="!userInfoLoaded" size="50px" line-fg-color="rgba(0, 88, 191, 0.5)" />
+    <div v-else class="wrapperProfile">
+      <Bell v-if='getRole==="ROLE_ADMIN"' :newMessage="newMessage" class="bell" />
+      <span @click='$router.push("/profile")' class="profile">
+        <span v-if='getRole === "ROLE_ADMIN" || getRole === "ROLE_CREATOR"' class="photo">
+           <img :src="logodefault" alt="">
         </span>
-          <span class='profile_title'>{{ showName }}</span>
+        <span v-else-if=" getRole === 'ROLE_ORGANIZATION' " class="photo">
+           <img :src='"http://aokaevents.tcrp.uz/api/file/"+this.$store.getters.getOrganizationState.logoId' alt="">
+        </span>
+        <span v-else class="photo">
+           <img :src='"http://aokaevents.tcrp.uz/api/file/"+this.$store.getters.getWorkerState.photoId' alt="">
+        </span>
+          <span class="profile_title">{{ showName }}</span>
       </span>
     </div>
   </div>
@@ -52,21 +57,10 @@ export default {
       } else return false;
     },
   },
-  watch: {
-    userInfoLoaded(state) {
-      if (state) {
-        if (this.getRole === 'ROLE_JOURNALIST') {
-          this.pathToPhoto = this.$store.getters['getWorkerState'].photoId;
-        } else if (this.getRole === 'ROLE_ORGANIZATION') {
-          this.pathToPhoto = this.$store.getters['getOrganizationState'].logoId;
-        }
-      }
-    },
-  },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 
 
 .navbar_wrapper {

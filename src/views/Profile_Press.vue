@@ -153,6 +153,7 @@ export default {
     },
     async changePassword() {
       if ((this.password === '') || (this.password !== this.rePassword)) {
+        this.$alert('Parollarni xato kiritilgan!', '', 'error');
         return null;
       }
       let sendObject = {

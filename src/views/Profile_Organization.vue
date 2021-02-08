@@ -1,37 +1,37 @@
 <template>
-  <div class='wrapper container'>
-    <div class='row'>
-      <Organization_Profile_Header class='col header' :info='info' />
+  <div class="wrapper container">
+    <div class="row">
+      <Organization_Profile_Header class="col header" :info="info" />
     </div>
-    <div class='row'>
-      <SearchInput @search-text='setSearchText' class='search col-6' />
+    <div class="row">
+      <SearchInput @search-text="setSearchText" class="search col-6" />
     </div>
-    <div class='tableWrapper row'>
-      <table class='table container'>
+    <div class="tableWrapper row">
+      <table class="table container">
         <thead>
-        <tr class='tableHeader row'>
-          <th class='col-6'>Xodimlar ro’yxati</th>
-          <th class='col-4'>Lavozimi</th>
-          <th class='col-2'>Faolligi</th>
+        <tr class="tableHeader row">
+          <th class="col-6">Xodimlar ro’yxati</th>
+          <th class="col-4">Lavozimi</th>
+          <th class="col-2">Faolligi</th>
         </tr>
         </thead>
-        <tbody v-if='workers.length && !loading'>
-        <tr class='tableList row' v-for='(worker) in workers' :key='worker.id'>
-          <td class='tableItem col-6'>{{ worker.firstName + ' ' + worker.lastName + ' ' + worker.fatherName }}</td>
-          <td class='tableItem col-4'>{{ worker.position }}</td>
-          <td class='tableItem col-2'>
-            <img v-if='worker.status === "ACTIVE"' src='../assets/icons/doneGreen.svg'>
-            <img v-else src='../assets/icons/notDone.svg'>
+        <tbody v-if="workers.length && !loading">
+        <tr class="tableList row" v-for="(worker) in workers" :key="worker.id">
+          <td class="tableItem col-6">{{ worker.firstName + ' ' + worker.lastName + ' ' + worker.fatherName }}</td>
+          <td class="tableItem col-4">{{ worker.position }}</td>
+          <td class="tableItem col-2">
+            <img v-if='worker.status === "ACTIVE"' src="../assets/icons/doneGreen.svg">
+            <img v-else src="../assets/icons/notDone.svg">
           </td>
         </tr>
         </tbody>
-        <div v-if='!workers.length && !loading' class='infoText'>Xodimlar topilmadi</div>
-        <Spinner class='row' v-if='loading' size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
+        <div v-if="!workers.length && !loading" class="infoText">Xodimlar topilmadi</div>
+        <Spinner class="row" v-if="loading" size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
       </table>
     </div>
-    <div class='row paginator'>
-      <paginator :pagination-list-length='paginationListLength' :current-page='currentPage' :range='3'
-                 @current-page='setCurrentPage' />
+    <div class="row paginator">
+      <paginator :pagination-list-length="paginationListLength" :current-page="currentPage" :range="3"
+                 @current-page="setCurrentPage" />
     </div>
   </div>
 </template>
@@ -90,7 +90,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .wrapper {
   height: 100%;
   display: flex;
@@ -139,9 +139,11 @@ export default {
       padding-left: 5px;
     }
 
-    &:nth-child(3), &:nth-child(4) {
+    &:nth-child(3),
+    &:nth-child(4) {
       justify-content: center;
     }
+
   }
 }
 
@@ -160,7 +162,6 @@ export default {
     padding: 11px 0;
     text-align: left;
 
-
     &:nth-child(3), &:nth-child(4) {
       display: flex;
       align-items: center;
@@ -174,6 +175,7 @@ export default {
     &:nth-child(2) {
       padding-left: 5px;
     }
+
   }
 }
 
@@ -182,5 +184,6 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 }
+
 
 </style>

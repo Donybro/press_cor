@@ -1,13 +1,13 @@
 <template>
-  <div class='app-main-layout'>
+  <div class="app-main-layout">
     <SideBar
-        class='sidebar'
+        class="sidebar"
         :class='{"smallSideBar":!sidebarIsOpen}' />
-    <div class='mainContent'>
-      <Navbar class='navbar' />
-      <div class='routerContent'>
-        <div v-if='!userInfoLoaded' class='spinnerWrapper'>
-          <Spinner size='huge' line-fg-color='rgba(0, 88, 191, 0.5)' />
+    <div class="mainContent">
+      <Navbar class="navbar" />
+      <div class="routerContent">
+        <div v-if="!userInfoLoaded" class="spinnerWrapper">
+          <Spinner size="huge" line-fg-color="rgba(0, 88, 191, 0.5)" />
         </div>
         <router-view v-else />
       </div>
@@ -57,6 +57,7 @@ export default {
 
 .routerContent {
   height: 90%;
+  padding: 0 3%;
 }
 
 .sidebar {
@@ -73,25 +74,25 @@ export default {
   min-width: 100px;
 }
 
-@media only screen and (min-width: 1400px) {
-  .sidebar {
-    min-width: 13%;
-  }
-
-
-}
-
-@media only screen and (min-width: 1200px) {
+@media only screen and (max-width: 1400px) {
 
   .smallSideBar {
-    min-width: 80px;
+    min-width: 65px;
+  }
+}
+
+
+@media only screen and (max-width: 1200px) {
+
+  .smallSideBar {
+    min-width: 55px;
   }
 }
 
 @media only screen and (max-width: 768px) {
 
   .smallSideBar {
-    min-width: 60px;
+    min-width: 44px;
   }
 }
 

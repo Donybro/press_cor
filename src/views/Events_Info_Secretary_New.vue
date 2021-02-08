@@ -1,12 +1,12 @@
 <template>
-  <div class="wrapper_event_info_new">
+  <div class="wrapper_event_info_new container">
     <div class="title_event_info_new">{{ event.name }}</div>
     <div class="partsWrapper_event_info_new">
       <div class="part_event_info_new">
         <div class="main_event_info_new">
           <div class="label_event_info_new">O’tkazilish kuni va vaqti</div>
           <date-picker v-if="editMode" :lang="lang" v-model="dateTime"
-                       :placeholder="dateTimeString" :show-second="false" type="datetime"
+                       format="DD.MM.YYYY , HH:mm" :placeholder="dateTimeString" :show-second="false" type="datetime"
                        valueType="date"></date-picker>
           <input v-else type="text" :placeholder="dateTimeString" :disabled="!editMode" class="body_event_info_new" />
 
@@ -14,7 +14,7 @@
         <div class="main_event_info_new">
           <div class="label_event_info_new">Ro’yxatdan o’tish uchun oxirgi muhlat</div>
           <date-picker v-if="editMode" :lang="lang" v-model="deadline"
-                       :placeholder="deadlineString" :show-second="false" type="datetime"
+                       format="DD.MM.YYYY , HH:mm" :placeholder="deadlineString" :show-second="false" type="datetime"
                        valueType="date"></date-picker>
           <input v-else type="text" :placeholder="deadlineString" :disabled="!editMode" class="body_event_info_new" />
         </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="main">
           <div class="label_event_info_new">Ro’yxatdan o’tganlar soni</div>
-          <input type="text" v-model="joinedCount" :disabled="!editMode" class="body_event_info_new" />
+          <input type="text" v-model="joinedCount" disabled class="body_event_info_new" />
         </div>
       </div>
     </div>
@@ -92,7 +92,6 @@ export default {
     },
   },
   mounted() {
-
     this.name = this.event.name;
     this.maxAmount = this.event.maxAmount;
     this.joinedCount = this.event.joinedCount;

@@ -1,18 +1,17 @@
 <template>
-  <div class='sidebar_wrapper'>
-    <div class='title'>
-      <img @click='toggleSidebar' src='../assets/icons/hamburger.png' alt=''>
-      <span v-if='sidebarIsOpen'>{{ title[getRole] }}</span>
+  <div class="sidebar_wrapper">
+    <div class="title" :class="{showSideBar:sidebarIsOpen}">
+      <img @click="toggleSidebar" src="../assets/icons/hamburger.png" alt="">
     </div>
-    <router-link active-class='active'
-                 :exact='item.isExact'
-                 class='listItem'
-                 v-for='item in list[getRole]'
-                 :key='item.name'
-                 tag='div'
-                 :to='item.to'>
-      <img :src='item.logo' alt=''>
-      <span class='menu_list' v-if='sidebarIsOpen'>{{ item.name }}</span>
+    <router-link active-class="active"
+                 :exact="item.isExact"
+                 class="listItem"
+                 v-for="item in list[getRole]"
+                 :key="item.name"
+                 tag="div"
+                 :to="item.to">
+      <img :src="item.logo" alt="">
+      <span class="menu_list" v-if="sidebarIsOpen">{{ item.name }}</span>
     </router-link>
   </div>
 </template>
@@ -97,12 +96,12 @@ export default {
           },
         ],
       },
-      title: {
-        'ROLE_ORGANIZATION': 'Matbuot tashkiloti',
-        'ROLE_ADMIN': 'Admiistratsiya',
-        'ROLE_CREATOR': 'Creator',
-        'ROLE_JOURNALIST': 'Jurnalist',
-      },
+      // title: {
+      //   'ROLE_ORGANIZATION': 'Matbuot tashkiloti',
+      //   'ROLE_ADMIN': 'Admiistratsiya',
+      //   'ROLE_CREATOR': 'Creator',
+      //   'ROLE_JOURNALIST': 'Jurnalist',
+      // },
     };
   },
   methods: {
@@ -124,11 +123,31 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
+
+.active {
+  background-color: #4a8cc9;
+}
 
 .sidebar_wrapper {
   background: #070D93;
   box-sizing: border-box;
+}
+
+.title {
+  display: flex;
+  height: 8%;
+  align-items: center;
+  margin-bottom: 100px;
+  margin-top: 10px;
+  padding-left: 30px;
+
+  img {
+    cursor: pointer;
+    width: 36px;
+    height: 27px;
+  }
+
 }
 
 .listItem {
@@ -136,83 +155,104 @@ export default {
   align-items: center;
   color: #fff;
   cursor: pointer;
-  padding-left: 32px;
-  height: 50px;
+  padding-left: 30px;
+  height: 60px;
 
   &:hover {
     background-color: #4a8cc9;
   }
 
   img {
-    width: 30px;
-    height: 30px;
-  }
-
-  span {
-    padding-left: 20px;
-    font-size: 17px;
-
-  }
-}
-
-.active {
-  background-color: #4a8cc9;
-}
-
-.title {
-  font-size: 20px;
-  color: #FFFFFF;
-  display: flex;
-  height: 8%;
-  align-items: center;
-  margin-bottom: 100px;
-  margin-top: 10px;
-
-  img {
-    cursor: pointer;
     width: 33px;
-    height: 24px;
-    margin-left: 30px;
+    height: 33px;
   }
 
   span {
-    margin-left: 20px;
+    padding-left: 12px;
+    font-size: 18px;
   }
 }
 
-.menu_list {
-  font-size: 18px;
-}
 
-@media only screen and (max-width: 1100px) {
+//.showSideBar {
+//  justify-content: flex-start;
+//}
+
+@media only screen and (max-width: 1400px) {
   .title {
-    font-size: 18px;
+    padding-left: 19px;
 
     img {
       width: 28px;
-      height: 20px;
-      margin-left: 20px;
+      height: 21px;
+    }
+  }
+  .listItem {
+    padding-left: 19px;
+    height: 50px;
+
+    img {
+      width: 25px;
+      height: 25px;
     }
 
     span {
-      margin-left: 15px;
+      padding-left: 20px;
+      font-size: 16px;
+
     }
   }
 
+}
+
+@media only screen and (max-width: 1200px) {
+  .title {
+    padding-left: 15px;
+
+    img {
+      width: 25px;
+      height: 18px;
+    }
+  }
+  .listItem {
+    padding-left: 15px;
+    height: 50px;
+
+    img {
+      width: 22px;
+      height: 22px;
+    }
+
+    span {
+      padding-left: 20px;
+      font-size: 14px;
+
+    }
+  }
 }
 
 @media only screen and (max-width: 768px) {
   .title {
-    font-size: 16px;
+    padding-left: 10px;
 
     img {
       width: 24px;
       height: 17px;
-      margin-left: 10px;
+    }
+  }
+  .listItem {
+    padding-left: 10px;
+    height: 40px;
+
+    img {
+      width: 22px;
+      height: 22px;
     }
 
     span {
-      margin-left: 10px;
+      padding-left: 20px;
+      font-size: 13px;
+
     }
   }
 

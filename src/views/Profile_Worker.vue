@@ -82,8 +82,23 @@ export default {
       }
     },
     async getLicense() {
-      let file = await Http.get('http://aokaevents.tcrp.uz/api/journalist/QR/' + this.$route.params.id);
-      fileDownload(file, 'license.pdf');
+      if (!this.worker.photoId) {
+        this.$alert('Id kartani xodim rasimisiz yuklab bo`lmaydi!', '', 'error');
+        return null;
+      } else {
+        try {
+          let file = await Http({
+            url: 'http://aokaevents.tcrp.uz/api/journalist/QR/' + this.$route.params.id,
+            method: 'GET',
+            responseType: 'blob',
+          });
+          fileDownload(file.data, 'license.pdf');
+          this.$alert('Yuklandi!', '', 'success');
+        } catch (e) {
+          this.$alert('Yuklashda xatolik yuz berdi!', '', 'error');
+        }
+      }
+
     },
     async sendWorkerStatus() {
       this.sending = true;
@@ -147,6 +162,10 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.errortext {
+  color: #ba2e2e;
 }
 
 .container input {

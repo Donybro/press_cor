@@ -54,7 +54,10 @@ export default {
         eventId: this.$route.params.eventId,
       });
       if (req.data.success) {
+        this.$alert(req.data.message, '', 'success');
         this.$router.push('/events');
+      } else {
+        this.$alert(req.data.message || 'Xatolik yuz berdi', '', 'error');
       }
     },
     async cancelEvent() {
@@ -63,7 +66,10 @@ export default {
         eventId: this.$route.params.eventId,
       });
       if (req.data.success) {
+        this.$alert(req.data.message, '', 'success');
         this.$router.push('/events');
+      } else {
+        this.$alert(req.data.message || 'Xatolik yuz berdi', '', 'error');
       }
     },
   },

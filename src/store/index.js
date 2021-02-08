@@ -7,6 +7,7 @@ import app from './app';
 import registration from './registration';
 import organization from './organization';
 import worker from './worker';
+import admin from './admin';
 
 export default new Vuex.Store({
   state: {},
@@ -17,5 +18,6 @@ export default new Vuex.Store({
     registration,
     organization,
     worker,
+    admin,
   },
 });

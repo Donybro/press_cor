@@ -1,48 +1,48 @@
 <template>
-  <div class='wrapper container'>
-    <div class='row btnsGroup'>
-      <Table_Button_Group class='col-3 btns'
-                          @showed-type='setShowedType'
-                          :left-text='leftButtonText'
-                          :right-text='rightButtonText'
+  <div class="wrapper container">
+    <div class="row btnsGroup">
+      <Table_Button_Group class="col-3 btns"
+                          @showed-type="setShowedType"
+                          :left-text="leftButtonText"
+                          :right-text="rightButtonText"
       />
     </div>
-    <div class='row tableWrapper'>
-      <table class='table container'>
+    <div class="row tableWrapper">
+      <table class="table container">
         <thead>
-        <tr class='row tableHeader'>
-          <th class='col-6'>Tadbir nomi</th>
-          <th class='col-3'>Sana</th>
-          <th class='col-3'>Qo’shilish</th>
+        <tr class="row tableHeader">
+          <th class="col-6">Tadbir nomi</th>
+          <th class="col-3">Sana</th>
+          <th class="col-3">Qo’shilish</th>
         </tr>
         </thead>
-        <tr v-if='loading' class='spinnerWrapper col'>
-          <Spinner class='spinnerWrapper' size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
+        <tr v-if="loading" class="spinnerWrapper col">
+          <Spinner class="spinnerWrapper" size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
         </tr>
-        <tbody v-if='!loading  && events.length'>
-        <tr class='row tableList' v-for='(event) in events' :key='event.name'>
-          <td class='tableItem col-6'>{{ event.name }}</td>
-          <td class='tableItem col-3'>{{
+        <tbody v-if="!loading  && events.length">
+        <tr class="row tableList" v-for="(event) in events" :key="event.name">
+          <td class="tableItem col-6">{{ event.name }}</td>
+          <td class="tableItem col-3">{{
               new Date(event.dateTime) | date
             }}
           </td>
-          <td class='tableItem  buttonWrapper col-3'>
+          <td class="tableItem  buttonWrapper col-3">
             <button
-                @click='$router.push(`/event/${queryString}/${event.id}`)'
-                class='btn'
+                @click="$router.push(`/event/${queryString}/${event.id}`)"
+                class="btn"
             >
               Batafsil
             </button>
           </td>
         </tr>
         </tbody>
-        <tr v-if='!events.length && queryString==="allAvailable"' class='textInfo'>Yangi tadbirlar hozircha yoq</tr>
-        <tr v-if='!events.length && queryString==="allJoined"' class='textInfo'>A`zo bo`lgan tadbirlar hozircha yoq</tr>
+        <tr v-if='!events.length && queryString==="allAvailable"' class="textInfo">Yangi tadbirlar hozircha yoq</tr>
+        <tr v-if='!events.length && queryString==="allJoined"' class="textInfo">A`zo bo`lgan tadbirlar hozircha yoq</tr>
       </table>
     </div>
-    <div class='row paginator'>
-      <paginator :range='2' :paginationListLength='paginationListLength'
-                 :currentPage='currentPage' @current-page='setCurrentPage' />
+    <div class="row paginator">
+      <paginator :range="2" :paginationListLength="paginationListLength"
+                 :currentPage="currentPage" @current-page="setCurrentPage" />
     </div>
   </div>
 </template>
@@ -91,7 +91,7 @@ export default {
       this.showedType = type;
       this.loading = true;
       this.currentPage = 1;
-      this.paginationListLength = 0;
+      this.paginationListLength = 1;
       if (this.ROLE === 'ROLE_JOURNALIST') {
         await this.fetchEvents(this.getWorkerID);
       }
@@ -183,7 +183,7 @@ export default {
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .wrapper {
   display: flex;
   flex-direction: column;

@@ -140,6 +140,14 @@ const routes = [
     meta: { layout: 'empty', auth: false },
   },
   {
+    path: '/welcome',
+    name: 'Welcome',
+    component: () => {
+      return import(`../views/Welcome`);
+    },
+    meta: { layout: 'empty', auth: false },
+  },
+  {
     path: '/organizations',
     name: 'Organizations',
     component: () => {

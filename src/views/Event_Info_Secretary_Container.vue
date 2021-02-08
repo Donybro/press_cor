@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Spinner class='organizationsList row' v-if='loading' size='large' line-fg-color='rgba(0, 88, 191, 0.5)' />
-    <Events_Info_Secretary_New v-if='(eventType === "allAfter") && !loading' :event='event' :event-id='eventId' />
-    <Event_Info_Secretary_Last :event='event' v-else />
+    <Spinner class="organizationsList row" v-if="loading" size="large" line-fg-color="rgba(0, 88, 191, 0.5)" />
+    <Events_Info_Secretary_New v-if='(eventType === "allAfter") && !loading' :event="event" :event-id="eventId" />
+    <Event_Info_Secretary_Last v-if='(eventType === "allBefore") && !loading' :event="event" />
   </div>
 </template>
 
