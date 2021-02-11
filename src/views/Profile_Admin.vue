@@ -4,8 +4,11 @@
       <div class='photo'>
         <img v-if='getRole === "ROLE_ADMIN" || getRole === "ROLE_CREATOR"' :src='logodefault' alt=''>
       </div>
-      <div v-if='ROLE==="ROLE_ADMIN"' class='name'>Administratsiya</div>
+      <div v-if='getRole==="ROLE_ADMIN"' class='name'>Administratsiya</div>
       <div v-else class='name'>Creator</div>
+    </div>
+    <div class='logoutWrapper'>
+      <Logout />
     </div>
     <div @click='toggleEditPasswordMode' class='licence'>
       <span>Parolni o’zgartirish</span>
@@ -39,10 +42,12 @@
 
 import Http from '../common/Http';
 import logodefault from '../assets/icons/images.png';
+import Logout from '../components/Logout';
 
 let ROLE = localStorage.getItem('ROLE');
 export default {
   name: 'Profile_Admin',
+  components: { Logout },
   data() {
     return {
       editPasswordMode: false,
@@ -99,6 +104,11 @@ export default {
 
 }
 
+.logoutWrapper {
+  width: 150px;
+  margin-top: 30px;
+}
+
 .errorText {
   text-align: center;
   font-size: 24px;
@@ -112,6 +122,7 @@ export default {
   font-weight: bold;
   font-size: 32px;
   line-height: 37px;
+  margin-top: 30px;
 
   .photo {
     width: 90px;

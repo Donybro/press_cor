@@ -1,55 +1,58 @@
 <template>
-  <div class="wrapper container">
-    <div class="info">
-      <div class="photo">
-        <img class="imgPhoto" :src='"http://aokaevents.tcrp.uz/api/file/"+getWorkerState.photoId' alt="">
-        <AddPhoto @photo-seted="setWorkerPhoto" />
+  <div class='wrapper container'>
+    <div class='info'>
+      <div class='photo'>
+        <img class='imgPhoto' :src='"http://aokaevents.tcrp.uz/api/file/"+getWorkerState.photoId' alt=''>
+        <AddPhoto @photo-seted='setWorkerPhoto' />
       </div>
-      <div class="name">{{ getWorkerState.firstName }} {{ getWorkerState.lastName }} {{ getWorkerState.fatherName }}
+      <div class='name'>{{ getWorkerState.firstName }} {{ getWorkerState.lastName }} {{ getWorkerState.fatherName }}
       </div>
     </div>
-    <div class="main">
-      <div class="part">
-        <div class="profession">
-          <div class="title">Lavozimi</div>
+    <div class='main'>
+      <div class='part'>
+        <div class='profession'>
+          <div class='title'>Lavozimi</div>
           {{ getWorkerState.position }}
         </div>
-        <div class="inputField">
-          <label for="phone">Telefon raqami</label>
-          <input :disabled="!editPhoneMode" :placeholder="getWorkerState.phoneNumber" ref="phone" id="phone"
-                 v-model="phoneNumber" type="text">
-          <div @click="toggleEditPhoneMode" class="editIcon">
-            <img v-if="!editPhoneMode" src="../assets/icons/edit.svg" alt="">
-            <img @click="sendChanges" v-else src="../assets/icons/done.svg" alt="">
+        <div class='inputField'>
+          <label for='phone'>Telefon raqami</label>
+          <input :disabled='!editPhoneMode' :placeholder='getWorkerState.phoneNumber' ref='phone' id='phone'
+                 v-model='phoneNumber' type='text'>
+          <div @click='toggleEditPhoneMode' class='editIcon'>
+            <img v-if='!editPhoneMode' src='../assets/icons/edit.svg' alt=''>
+            <img @click='sendChanges' v-else src='../assets/icons/done.svg' alt=''>
           </div>
         </div>
         <div>
-          <a @click="getLicense" class="licence" download>
+          <a @click='getLicense' class='licence' download>
             ID kartani yuklab olish (pdf, jpg)
-            <img src="../assets/icons/download.svg" alt="">
+            <img src='../assets/icons/download.svg' alt=''>
           </a>
         </div>
+        <div class='logoutWrapper'>
+          <Logout />
+        </div>
       </div>
-      <div class="part">
-        <div @click="toggleEditPasswordMode" class="licence">
+      <div class='part'>
+        <div @click='toggleEditPasswordMode' class='licence'>
           <span>Parolni o’zgartirish</span>
-          <img src="../assets/icons/editPasword.svg" alt="">
+          <img src='../assets/icons/editPasword.svg' alt=''>
         </div>
-        <div class="mb-4" v-if="editPasswordMode">
-          <div class="inputField mb-4">
-            <label for="lastPassword">Eski parol</label>
-            <input id="lastPassword" v-model="oldPassword" type="password">
+        <div class='mb-4' v-if='editPasswordMode'>
+          <div class='inputField mb-4'>
+            <label for='lastPassword'>Eski parol</label>
+            <input id='lastPassword' v-model='oldPassword' type='password'>
           </div>
-          <div class="inputField mb-4">
-            <label for="newPassword">Yangi parol</label>
-            <input id="newPassword" v-model="password" type="password">
+          <div class='inputField mb-4'>
+            <label for='newPassword'>Yangi parol</label>
+            <input id='newPassword' v-model='password' type='password'>
           </div>
-          <div class="inputField mb-4">
-            <label for="newPassword2">Yangi parolni takroran kiriting</label>
-            <input id="newPassword2" v-model="rePassword" type="password">
+          <div class='inputField mb-4'>
+            <label for='newPassword2'>Yangi parolni takroran kiriting</label>
+            <input id='newPassword2' v-model='rePassword' type='password'>
           </div>
         </div>
-        <button @click="sendChanges" v-if="editPasswordMode">
+        <button @click='sendChanges' v-if='editPasswordMode'>
           Tasdiqlash
         </button>
       </div>
@@ -64,10 +67,11 @@ import Http from '../common/Http';
 
 // let  fileDownload = require('js-file-download');
 import fileDownload from 'js-file-download';
+import Logout from '../components/Logout';
 
 export default {
   name: 'Journalist_Profile',
-  components: { AddPhoto },
+  components: { Logout, AddPhoto },
   data() {
     return {
       phoneNumber: '',
@@ -165,9 +169,14 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .wrapper {
   padding-top: 10px;
+}
+
+.logoutWrapper {
+  width: 150px;
+  margin-top: 30px;
 }
 
 .main {

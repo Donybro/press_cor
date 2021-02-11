@@ -261,7 +261,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const requireAuth = to.matched.some(record => record.meta.auth);
   let isAuth = localStorage.getItem('isAuth');
+  if (to.path === '/auth') {
+    localStorage.clear();
+  }
 
+  console.log(to, from);
   if (requireAuth && isAuth !== 'true') {
     next('/auth');
   } else
